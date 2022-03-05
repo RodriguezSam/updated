@@ -1,0 +1,17 @@
+.btn-primary {
+    color: #fff;
+    background-color: #6bcae0;
+    border-color: #188d92;
+    border-width: medium;
+    padding: 2px;
+  }
+  
+  .login-icon{
+    width: 90px;
+    height: 90px;
+    padding: 4px;
+  }
+  
+  .background{
+    background-image: "../abstract-background.jpg"
+  }
