@@ -18,7 +18,6 @@ const Data = () => {
     async function fetchAthletes() {
         const apiData = await API.graphql({ query: listAthletes });
         setAthletes(apiData.data.listAthletes.items);
-        print(apiData);
     }
 
     async function createAthlete() {
