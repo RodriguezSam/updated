@@ -8,6 +8,7 @@ import Email from "./pages/Email";
 import Chat from "./pages/Chat";
 import Navbar from "./components/Navbar";
 import Login from "./components/Login/Login";
+import Data from './pages/Data';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/email" element={<Email />} />
           <Route path="/chat" element={<Chat />} />
           <Route path="/Login/Login" element={<Login />} />
+          <Route path="/data" element={<Data />} />
        </Routes>
      </div>
     </Router>

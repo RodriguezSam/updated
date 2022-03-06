@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "serviceConfiguration": {
+    "apiName": "data",
+    "serviceName": "AppSync",
+    "gqlSchemaPath": "C:\\Users\\surge\\OneDrive\\Documents\\CS 476-1\\updated\\amplify\\backend\\api\\data\\schema.graphql",
+    "defaultAuthType": {
+      "mode": "AWS_IAM"
+    },
+    "conflictResolution": {},
+    "additionalAuthTypes": [
+      {
+        "mode": "API_KEY",
+        "expirationTime": 7,
+        "apiKeyExpirationDate": "2022-03-13T05:17:00.352Z",
+        "keyDescription": "data"
+      }
+    ]
+  }
+}

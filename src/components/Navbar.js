@@ -18,6 +18,7 @@ const Navbar = () => {
         <li><Link to="/Home"><span class="glyphicon glyphicon-home"></span> Home</Link></li>
         <li><Link to="/Email"><span class="glyphicon glyphicon-envelope"></span> Email</Link></li>
         <li><Link to="/Chat"><span class="glyphicon glyphicon-user"></span> Open Chat</Link></li>
+        <li><Link to="/Data"><span class="glyphicon glyphicon-stats"></span> Data</Link></li>
       </ul>
 
        {/* on the right hand side of the navbar sign up and login are
