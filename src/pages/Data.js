@@ -1,6 +1,6 @@
 import React, {useState, useEffect } from "react";
 import "../App.css";
-import { API } from 'aws-amplify';
+import { API, graphqlOperation } from 'aws-amplify';
 import { listAthletes } from './graphql/queries';
 import { createAthlete as createAthleteMutation, deleteAthlete as deleteAthleteMutation } from './graphql/mutations';
 
@@ -16,8 +16,16 @@ const Data = () => {
     }, []);
 
     async function fetchAthletes() {
-        const apiData = await API.graphql({ query: listAthletes });
-        setAthletes(apiData.data.listAthletes.items);
+        // const apiData = await API.graphql({ query: listAthletes });
+        // setAthletes(apiData.data.listAthletes.items);
+        try {
+            const athleteData = await API.graphql(graphqlOperation(listAthletes));
+            const athleteList = athleteData.data.listAthletes.items;
+            console.log('athlete list', athleteList);
+            setAthletes(athleteList)
+        } catch (error) {
+            console.log('error on fetching athletes', error)
+        }
     }
 
     async function createAthlete() {
