@@ -1,13 +1,62 @@
-# This "input" configures a global authorization rule to enable public access to
-# all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
-input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
-
-type Athlete @model {
-    id: ID!
-    email: String
-    team_id: ID!
-    gender: String
-    phone_number: String
-    date_of_birth: String
-    full_name: String
+type Staff @model @auth(rules: [{allow: private, provider: iam}]) {
+  id: ID!
+  email: AWSEmail
+  team_id: ID
+  gender: String
+  phone_number: AWSPhone
+  date_of_birth: AWSDate
+  full_name: String
+  Teams: [Team] @hasMany(indexName: "byStaff", fields: ["id"])
 }
+
+type Coach @model @auth(rules: [{allow: private, provider: iam}]) {
+  id: ID!
+  email: AWSEmail
+  team_id: ID
+  gender: String
+  phone_number: AWSPhone
+  date_of_birth: AWSDate
+  full_name: String
+  Team: [Team] @hasMany(indexName: "byCoach", fields: ["id"])
+}
+
+type Team @model @auth(rules: [{allow: private, provider: iam}]) {
+  id: ID!
+  coach_id: ID
+  team_name: String
+  staffID: ID! @index(name: "byStaff")
+  coachID: ID! @index(name: "byCoach")
+}
+
+type Personal @model @auth(rules: [{allow: private, provider: iam}]) {
+  id: ID!
+  stress_level: Int
+  emotional_level: Int
+  fatigue_level: Int
+  health_level: Int
+  injury_notes: String
+  activity_notes: String
+}
+
+type Activity @model @auth(rules: [{allow: private, provider: iam}]) {
+  id: ID!
+  steps: Int
+  sleep_hours: Int
+  mileage: Int
+  avg_pace: Int
+  vertical_gain: Int
+  total_time: AWSTime
+}
+
+type Athlete @model @auth(rules: [{allow: private, provider: iam}]) {
+  id: ID!
+  email: String
+  team_id: ID!
+  gender: String
+  phone_number: String
+  date_of_birth: String
+  full_name: String
+  Personal: Personal @hasOne
+  Activity: Activity @hasOne
+}
+ 

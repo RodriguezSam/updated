@@ -36,18 +36,16 @@
           "defaultAuthentication": {
             "authenticationType": "AWS_IAM"
           },
-          "additionalAuthenticationProviders": [
-            {
-              "authenticationType": "API_KEY",
-              "apiKeyConfig": {
-                "apiKeyExpirationDays": 7,
-                "apiKeyExpirationDate": "2022-03-13T05:17:00.352Z",
-                "description": "data"
-              }
-            }
-          ]
+          "additionalAuthenticationProviders": []
         }
       }
+    }
+  },
+  "storage": {
+    "s3updatedstorageb8eaf79d": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": []
     }
   }
 }

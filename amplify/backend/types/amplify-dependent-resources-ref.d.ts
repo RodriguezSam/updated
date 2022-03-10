@@ -12,9 +12,14 @@ export type AmplifyDependentResourcesAttributes = {
     },
     "api": {
         "data": {
-            "GraphQLAPIKeyOutput": "string",
             "GraphQLAPIIdOutput": "string",
             "GraphQLAPIEndpointOutput": "string"
+        }
+    },
+    "storage": {
+        "s3updatedstorageb8eaf79d": {
+            "BucketName": "string",
+            "Region": "string"
         }
     }
 }

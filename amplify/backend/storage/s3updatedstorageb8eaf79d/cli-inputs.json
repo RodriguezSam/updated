@@ -1,0 +1,12 @@
+{
+  "resourceName": "s3updatedstorageb8eaf79d",
+  "bucketName": "updated-storage-b8eaf79d",
+  "policyUUID": "83c17986",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ]
+}
