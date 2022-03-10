@@ -1,41 +1,87 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { Fragment, useState } from 'react';
+import { Link, Navigate } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { logout } from '../actions/auth';
 
-const Navbar = () => {
-  return (
-    <div class="container-fluid navbar-inverse">
-     <nav>
-      <div class="navbar-header">
-        <Link to ="/Teampage" class="navbar-brand">Team Agone</Link>
-      </div>
-      {/*// -- make a list of the navbar elements that
-          // will be displayed on the left of the navbar
+const Navbar = ({ logout, isAuthenticated }) => {
+  const [redirect, setRedirect] = useState(false);
+
+  const logout_user = () => {
+    logout();
+    setRedirect(true);
+  };
+
+  const guestLinks = () => (
+      <Fragment>
+        {/* The guest links defined here will
+          only be shown when the user is not 
+          authenticated to provide further security
+          for sensitive athlete information 
+          */}
+          <li className='nav-item'>
+              <Link to='/login'><span class="glyphicon glyphicon-user"></span> Login</Link>
+          </li>
+          <li className='nav-item'>
+              <Link to='/signup'><span class="glyphicon glyphicon-user"></span> Sign Up</Link>
+          </li>
+      </Fragment>
+    );
+
+
+    const authLinks = () => (
+      
+      <>
+         {/*// -- make a list of the navbar elements that
+               will be displayed on the navbar when the 
+               user is authenticated
           - glyphicon-_____ includes the icon to the left of the nav link
           - <Link> is a react router component that routes to the desired page
-      // -->
-      */}
-      <ul class="nav navbar-nav">
-        <li><Link to="/Home"><span class="glyphicon glyphicon-home"></span> Home</Link></li>
-        <li><Link to="/Email"><span class="glyphicon glyphicon-envelope"></span> Email</Link></li>
-        <li><Link to="/Chat"><span class="glyphicon glyphicon-user"></span> Open Chat</Link></li>
-        <li><Link to="/Data"><span class="glyphicon glyphicon-stats"></span> Data</Link></li>
-      </ul>
+          */}
+        <li className='nav-item'>
+         <Link to="/Home"><span class="glyphicon glyphicon-home"></span> Home</Link>
+        </li>
+        <li className='nav-item'>
+         <Link to="/Dashboard"><span class="glyphicon glyphicon-signal"></span> Dashboard</Link>
+        </li>
+        <li className='nav-item'>
+         <Link to="/Email"><span class="glyphicon glyphicon-envelope"></span> Email</Link>
+        </li>
+        <li className='nav-item'>
+          <Link to="/Chat"><span class="glyphicon glyphicon-comment"></span> Chat</Link>
+        </li>
+        <li className='nav-item'>
+            <a className='nav-link' href='#!' onClick={logout_user}>Logout</a>
+        </li>
+        <li className='nav-item'>
+        <Link to="/Data"><span class="glyphicon glyphicon-stats"></span> Data</Link>
+        </li></>
+  );
+  
 
-       {/* on the right hand side of the navbar sign up and login are
-           incorporated to allow for:
-             - return users logging in to view data (i.e. as coach or athlete)
-               or upload data (as athlete)
-             - people who have received an onboarding email from the
-               coach to sign up for an account in the team wellness portal
-             - class glyphicon glyphicon-______ is a way of importing
-              icons from the glyphicons haffling set (kind of like an icon library)
-       */}
-      <ul class="nav navbar-nav navbar-right">
-        <li><Link to="/Login"><span class="glyphicon glyphicon-user"></span> Sign Up</Link></li>
-        <li><Link to="/Login/Login"><span class="glyphicon glyphicon-log-in"></span> Login</Link></li>
-      </ul>
-    </nav>
-   </div>
+  return (
+    <Fragment>
+      <div class="container-fluid navbar-inverse">
+        <nav>
+          <div class="navbar-header">
+            <Link className='navbar-brand' to='/'>Team Success Portal</Link>
+          </div>
+          
+          <ul class="nav navbar-nav ml-auto">
+            <li>
+              <Link className='nav-link' to='/'><span className='glyphicon glyphicon-home'></span> Home</Link>
+            </li>
+            {isAuthenticated ? authLinks() : guestLinks()}
+          </ul>
+        </nav>
+        {redirect ? <Navigate to='/' /> : <Fragment></Fragment>}
+      </div>
+    </Fragment>
     );
-}
-export default Navbar;
+};
+
+
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, { logout })(Navbar);

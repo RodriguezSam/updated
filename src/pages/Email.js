@@ -2,8 +2,7 @@ import React from "react";
 import "../App.css";
 import Tabs from "../components/Tabs";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
-import "../components/Login/Login.css";
-import loginIcon from "../components/Login/loginIcon.png"
+
 
 const Email = () => {
   return (
