@@ -1,8 +1,11 @@
 import React, {useState, useEffect } from "react";
 import "../App.css";
-import { API, graphqlOperation } from 'aws-amplify';
+import awsconfig from './aws-exports';
+import Amplify, { API, graphqlOperation } from 'aws-amplify';
 import { listAthletes } from './graphql/queries';
 import { createAthlete as createAthleteMutation, deleteAthlete as deleteAthleteMutation } from './graphql/mutations';
+
+Amplify.configure(awsconfig);
 
 const initalFormState = { email: '', gender: '', phone_number: '', date_of_birth: '', full_name: ''}
 
@@ -12,21 +15,21 @@ const Data = () => {
     const [formData, setFormData] = useState(initalFormState);
 
     useEffect(() => {
-        fetchAthletes();
-    }, []);
+        fetchAthletes()
+    })
 
-    async function fetchAthletes() {
+    const fetchAthletes = async () => {
         // const apiData = await API.graphql({ query: listAthletes });
         // setAthletes(apiData.data.listAthletes.items);
         try {
             const athleteData = await API.graphql(graphqlOperation(listAthletes));
             const athleteList = athleteData.data.listAthletes.items;
             console.log('athlete list', athleteList);
-            setAthletes(athleteList)
+            setAthletes(athleteList);
         } catch (error) {
-            console.log('error on fetching athletes', error)
+            console.log('error on fetching athletes', error);
         }
-    }
+    };
 
     async function createAthlete() {
         if (!formData.email || !formData.gender || !formData.phone_number || !formData.date_of_birth || !formData.full_name) return;
@@ -45,33 +48,6 @@ const Data = () => {
       <div>
 
         <h1>Data</h1>
-
-        <input
-            onChange={e => setFormData({ ...formData, 'full_name': e.target.value})}
-            placeholder="Full Name"
-            value={formData.full_name}
-        />
-        <input
-            onChange={e => setFormData({ ...formData, 'email': e.target.value})}
-            placeholder="Email"
-            value={formData.email}
-        />
-        <input
-            onChange={e => setFormData({ ...formData, 'gender': e.target.value})}
-            placeholder="Gender"
-            value={formData.gender}
-        />
-        <input
-            onChange={e => setFormData({ ...formData, 'phone_number': e.target.value})}
-            placeholder="Phone Number"
-            value={formData.phone_number}
-        />
-        <input
-            onChange={e => setFormData({ ...formData, 'date_of_birth': e.target.value})}
-            placeholder="Date of Birth"
-            value={formData.date_of_birth}
-        />
-        <button onClick={createAthlete}>Create Athlete</button>
         <div style={{marginBottom: 30}}>
             {
                 athletes.map(athlete => (
