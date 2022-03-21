@@ -39,7 +39,6 @@ class  App extends Component {
         console.log(error);
       }
     }
-
     
     this.setState({ isAuthenticating: false });
   }
@@ -58,12 +57,12 @@ class  App extends Component {
           <div>
             <Navbar auth={authProps} />
             <Routes>
-              <Route path="/home" element={<Home />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/email" element={<Email />} />
-              <Route path="/chat" element={<Chat />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
+              <Route path="/home" element={<Home auth={authProps} />} />
+              <Route path="/dashboard" element={<Dashboard auth={authProps} />} />
+              <Route path="/email" element={<Email auth={authProps} />} />
+              <Route path="/chat" element={<Chat auth={authProps} />} />
+              <Route path="/login" element={<Login auth={authProps} />} />
+              <Route path="/signup" element={<Signup auth={authProps} />} />
             </Routes>
           </div>
         </Router>
