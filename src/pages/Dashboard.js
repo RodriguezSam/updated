@@ -4,9 +4,10 @@ import Tabs from "../components/Tabs";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useState } from "react";
 import userdata from "../athleteInfo.json";
+import { POST } from "../components/POST.js";
 
 
-function Home() {
+function Dashboard() {
   const [users, setUsers] = useState(userdata.data);
 
   const handleDragEnd = (result) => {
@@ -29,6 +30,8 @@ return (
            <h1>Team Agone</h1>
            <button class="right"> Save Changes </button>
          </div>
+         <div class="Top">
+         </div>
            <Tabs>
              <div label="USERS">
              <DragDropContext onDragEnd={handleDragEnd}>
@@ -49,41 +52,7 @@ return (
                    <th>Updated on</th>
                 </tr>
                </thead>
-              <Droppable droppableId="droppable-1">
-                {(provider) => (
-                  <tbody
-                    className="text-capitalize"
-                    ref={provider.innerRef}
-                    {...provider.droppableProps}
-                  >
-                    {users?.map((user, index) => (
-                      <Draggable
-                        key={user.id}
-                        draggableId={user.id}
-                        index={index}
-                      >
-                        {(provider) => (
-                          <tr {...provider.draggableProps} ref={provider.innerRef}>
-                            <td {...provider.dragHandleProps}>~</td>
-                            <td>{user.id}</td>
-                            <td>{user.email}</td>
-                            <td>{user.first_name}</td>
-                            <td>{user.last_name}</td>
-                            <td>{user.birth_date}</td>
-                            <td>{user.birth_year}</td>
-                            <td>{user.gender}</td>
-                            <td>{user.height}</td>
-                            <td>{user.weight}</td>
-                            <td>{user.created_on}</td>
-                            <td>{user.updated_on}</td>
-                          </tr>
-                        )}
-                      </Draggable>
-                    ))}
-                    {provider.placeholder}
-                  </tbody>
-                )}
-              </Droppable>
+                <POST />
               </table>
              </DragDropContext>
              </div>
@@ -503,4 +472,4 @@ return (
 
 }
 
-export default Home;
+export default Dashboard;

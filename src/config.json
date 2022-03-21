@@ -1,0 +1,10 @@
+{
+    "api": { 
+      "invokeUrl": "https://master.d3oiokxrht76c8.amplifyapp.com"
+    },
+    "cognito": {
+      "REGION": "us-west-1",
+      "USER_POOL_ID": "us-west-1_x1InJM1j9",
+      "APP_CLIENT_ID": "1g6ij0oemtmfcsg1enilavn7es"
+    }
+  }

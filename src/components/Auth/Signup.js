@@ -1,127 +1,158 @@
-import React, { useState } from 'react';
-import { Link, Navigate } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { signup } from '../../actions/auth';
-import axios from 'axios';
-import './form.css';
+import React, { Component } from 'react';
+import FormErrors from "../FormErrors";
+import Validate from "../utility/FormValidation";
+import { Auth } from "aws-amplify";
 
-const Signup = ({ signup, isAuthenticated }) => {
-    const [accountCreated, setAccountCreated] = useState(false);
-    const [formData, setFormData] = useState({
-        first_name: '',
-        last_name: '',
-        email: '',
-        password: '',
-        re_password: ''
+class Signup extends Component {
+  state = {
+    username: "",
+    email: "",
+    password: "",
+    confirmpassword: "",
+    errors: {
+      cognito: null,
+      blankfield: false,
+      passwordmatch: false
+    }
+  }
+
+  clearErrorState = () => {
+    this.setState({
+      errors: {
+        cognito: null,
+        blankfield: false,
+        passwordmatch: false
+      }
     });
+  }
 
-    const { first_name, last_name, email, password, re_password } = formData;
+  handleSubmit = async event => {
+    event.preventDefault();
 
-    const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
-
-    const onSubmit = e => {
-        e.preventDefault();
-
-        if (password === re_password) {
-            signup(first_name, last_name, email, password, re_password);
-            setAccountCreated(true);
-        }
-    };
-
-    const continueWithGoogle = async () => {
-        try {
-            const res = await axios.get(`${process.env.REACT_APP_API_URL}/auth/o/google-oauth2/?redirect_uri=${process.env.REACT_APP_API_URL}/google`)
-
-            window.location.replace(res.data.authorization_url);
-        } catch (err) {
-
-        }
-    };
-
-    if (isAuthenticated) {
-        return <Navigate to='/' />
-    }
-    if (accountCreated) {
-        return <Navigate to='/login' />
+    // Form validation
+    this.clearErrorState();
+    const error = Validate(event, this.state);
+    if (error) {
+      this.setState({
+        errors: { ...this.state.errors, ...error }
+      });
     }
 
+    // AWS Cognito integration here
+    const { username, email, password } = this.state;
+    try {
+      const signUpResponse = await Auth.signUp({
+        username,
+        password,
+        attributes: {
+          email: email
+        }
+      });
+      this.props.history.push("/welcome");
+      console.log(signUpResponse);
+    } catch (error) {
+      let err = null;
+      !error.message ? err = { "message": error } : err = error;
+      this.setState({
+        errors: {
+          ...this.state.errors,
+          cognito: err
+        }
+      });
+    }
+  }
+
+  onInputChange = event => {
+    this.setState({
+      [event.target.id]: event.target.value
+    });
+    document.getElementById(event.target.id).classList.remove("is-danger");
+  }
+
+  render() {
     return (
-        <div className='container content mt-5'>
-            <h1>Sign Up</h1>
-            <p>Create your Account</p>
-            <form onSubmit={e => onSubmit(e)}>
-                <div className='form-group'>
-                    <input
-                        className='form-control'
-                        type='text'
-                        placeholder='First Name*'
-                        name='first_name'
-                        value={first_name}
-                        onChange={e => onChange(e)}
-                        required
-                    />
-                </div>
-                <div className='form-group'>
-                    <input
-                        className='form-control'
-                        type='text'
-                        placeholder='Last Name*'
-                        name='last_name'
-                        value={last_name}
-                        onChange={e => onChange(e)}
-                        required
-                    />
-                </div>
-                <div className='form-group'>
-                    <input
-                        className='form-control'
-                        type='email'
-                        placeholder='Email*'
-                        name='email'
-                        value={email}
-                        onChange={e => onChange(e)}
-                        required
-                    />
-                </div>
-                <div className='form-group'>
-                    <input
-                        className='form-control'
-                        type='password'
-                        placeholder='Password*'
-                        name='password'
-                        value={password}
-                        onChange={e => onChange(e)}
-                        minLength='6'
-                        required
-                    />
-                </div>
-                <div className='form-group'>
-                    <input
-                        className='form-control'
-                        type='password'
-                        placeholder='Confirm Password*'
-                        name='re_password'
-                        value={re_password}
-                        onChange={e => onChange(e)}
-                        minLength='6'
-                        required
-                    />
-                </div>
-                <button className='btn btn-primary' type='submit'>Register</button>
-            </form> <p />
-            <button className='btn btn-danger mt-3' onClick={continueWithGoogle}>
-                Continue With Google
-            </button>
-            <br />
-            <p className='mt-3'>
-                Already have an account? <Link to='/login'>Sign In</Link>
-            </p>
+      <section className="section auth">
+        <div className="container">
+          <h1>Signup for an account</h1>
+          <FormErrors formerrors={this.state.errors} />
+
+          <form onSubmit={this.handleSubmit}>
+            <div className="field">
+              <p className="control">
+                <input 
+                  className="input" 
+                  type="text"
+                  id="username"
+                  aria-describedby="userNameHelp"
+                  placeholder="Enter username"
+                  value={this.state.username}
+                  onChange={this.onInputChange}
+                />
+              </p>
+            </div>
+            <div className="field">
+              <p className="control has-icons-left has-icons-right">
+                <input 
+                  className="input" 
+                  type="email"
+                  id="email"
+                  aria-describedby="emailHelp"
+                  placeholder="Enter email"
+                  value={this.state.email}
+                  onChange={this.onInputChange}
+                />
+                <span className="icon is-small is-left">
+                  <i className="fas fa-envelope"></i>
+                </span>
+              </p>
+            </div>
+            <div className="field">
+              <p className="control has-icons-left">
+                <input 
+                  className="input" 
+                  type="password"
+                  id="password"
+                  placeholder="Password"
+                  value={this.state.password}
+                  onChange={this.onInputChange}
+                />
+                <span className="icon is-small is-left">
+                  <i className="fas fa-lock"></i>
+                </span>
+              </p>
+            </div>
+            <div className="field">
+              <p className="control has-icons-left">
+                <input 
+                  className="input" 
+                  type="password"
+                  id="confirmpassword"
+                  placeholder="Confirm password"
+                  value={this.state.confirmpassword}
+                  onChange={this.onInputChange}
+                />
+                <span className="icon is-small is-left">
+                  <i className="fas fa-lock"></i>
+                </span>
+              </p>
+            </div>
+            <div className="field">
+              <p className="control">
+                <a href="/forgotpassword">Forgot password?</a>
+              </p>
+            </div>
+            <div className="field">
+              <p className="control">
+                <button className="button is-success">
+                  Register
+                </button>
+              </p>
+            </div>
+          </form>
         </div>
+      </section>
     );
-};
+  }
+}
 
-const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated
-});
-
-export default connect(mapStateToProps, { signup })(Signup);
+export default Signup;

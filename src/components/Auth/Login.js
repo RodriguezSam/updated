@@ -1,87 +1,118 @@
-import React, { useState } from 'react';
-import { Link, Navigate } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { login } from '../../actions/auth';
-import axios from 'axios';
-import './form.css';
+import React, { Component } from 'react';
+import FormErrors from "../FormErrors";
+import Validate from "../utility/FormValidation";
+import { Auth } from "aws-amplify";
 
-const Login = ({ login, isAuthenticated }) => {
-    const [formData, setFormData] = useState({
-        email: '',
-        password: '' 
+class Login extends Component {
+  state = {
+    username: "",
+    password: "",
+    errors: {
+      cognito: null,
+      blankfield: false
+    }
+  };
+
+  clearErrorState = () => {
+    this.setState({
+      errors: {
+        cognito: null,
+        blankfield: false
+      }
     });
+  };
 
-    const { email, password } = formData;
+  handleSubmit = async event => {
+    event.preventDefault();
 
-    const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
-
-    const onSubmit = e => {
-        e.preventDefault();
-
-        login(email, password);
-    };
-
-    const continueWithGoogle = async () => {
-        try {
-            const res = await axios.get(`${process.env.REACT_APP_API_URL}/auth/o/google-oauth2/?redirect_uri=${process.env.REACT_APP_API_URL}/google`)
-
-            window.location.replace(res.data.authorization_url);
-        } catch (err) {
-
-        }
-    };
-
-    if (isAuthenticated) {
-        return <Navigate to='/' />
+    // Form validation
+    this.clearErrorState();
+    const error = Validate(event, this.state);
+    if (error) {
+      this.setState({
+        errors: { ...this.state.errors, ...error }
+      });
     }
 
+    // AWS Cognito integration here
+    try {
+      const user = await Auth.signIn(this.state.username, this.state.password);
+      console.log(user);
+      this.props.auth.setAuthStatus(true);
+      this.props.auth.setUser(user);
+      this.props.history.push("/home");
+    }catch(error) {
+      let err = null;
+      !error.message ? err = { "message": error } : err = error;
+      this.setState({
+        errors: {
+          ...this.state.errors,
+          cognito: err
+        }
+      });
+    }
+  };
+
+  onInputChange = event => {
+    this.setState({
+      [event.target.id]: event.target.value
+    });
+    document.getElementById(event.target.id).classList.remove("is-danger");
+  };
+
+  render() {
     return (
-        <div className='container mt-5 content'>
-            <h1>Account Login</h1>
-            <p>Sign into your account</p>
-            <form onSubmit={e => onSubmit(e)}>
-                <div className='form-group'>
-                    <input
-                        className='form-control'
-                        type='email'
-                        placeholder='Email'
-                        name='email'
-                        value={email}
-                        onChange={e => onChange(e)}
-                        required
-                    />
-                </div>
-                <div className='form-group'>
-                    <input
-                        className='form-control'
-                        type='password'
-                        placeholder='Password'
-                        name='password'
-                        value={password}
-                        onChange={e => onChange(e)}
-                        minLength='6'
-                        required
-                    />
-                </div>
-                <button className='btn btn-primary' type='submit'>Login</button>
-            </form>
-            <p />
-            <button className='btn btn-danger mt-3' onClick={continueWithGoogle}>
-                Continue With Google
-            </button> <p />
-            <br />
-            <p className='mt-3'>
-                Don't have an account? <Link to='/signup'>Sign Up</Link>
-            </p>
-            <p className='mt-3'>
-                Forgot your Password? {/*<Link to='/reset-password'>Reset Password</Link>*/}
-            </p>
+      <section className="section auth">
+        <div className="container">
+          <h1>Account Login</h1>
+          <FormErrors formerrors={this.state.errors} />
+
+          <form onSubmit={this.handleSubmit}>
+            <div className="field">
+              <p className="control">
+                <input 
+                  className="input" 
+                  type="text"
+                  id="username"
+                  aria-describedby="usernameHelp"
+                  placeholder="Enter username or email"
+                  value={this.state.username}
+                  onChange={this.onInputChange}
+                />
+              </p>
+            </div>
+            <div className="field">
+              <p className="control has-icons-left">
+                <input 
+                  className="input" 
+                  type="password"
+                  id="password"
+                  placeholder="Password"
+                  value={this.state.password}
+                  onChange={this.onInputChange}
+                />
+                <span className="icon is-small is-left">
+                  <i className="fas fa-lock"></i>
+                </span>
+              </p>
+            </div>
+            <div className="field">
+              <p className="control">
+                <a href="/forgotpassword">Forgot password?</a>
+              </p>
+            </div>
+            <div className="field">
+              <p className="control">
+                <button className="button is-success">
+                  Login
+                </button>
+              </p>
+            </div>
+          </form>
         </div>
+      </section>
     );
-};
+  }
+}
 
-const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated
-});
-
-export default connect(mapStateToProps, { login })(Login);
+export default Login;
