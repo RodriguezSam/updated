@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import FormErrors from "../FormErrors";
 import Validate from "../utility/FormValidation";
 import { Auth } from "aws-amplify";
@@ -48,7 +49,8 @@ class Signup extends Component {
           email: email
         }
       });
-      this.props.history.push("/welcome");
+      <Link to="/welcome" state={{ isAuthenticated: true }} />;
+      //this.props.history.push("/welcome");
       console.log(signUpResponse);
     } catch (error) {
       let err = null;
