@@ -9,9 +9,12 @@ import Chat from "./pages/Chat";
 import Navbar from "./components/Navbar";
 import Login from "./components/Auth/Login";
 import Signup from "./components/Auth/Signup";
+import Welcome from "./components/Auth/Welcome";
+import ForgotPassword from "./components/Auth/ForgotPassword";
+import ForgotPasswordVerification from "./components/utility/ForgotPasswordVerification";
 import { Auth } from 'aws-amplify';
 
-class  App extends Component {
+class App extends Component {
 
   state = {
     isAuthenticated: false,
@@ -63,6 +66,8 @@ class  App extends Component {
               <Route path="/chat" element={<Chat auth={authProps} />} />
               <Route path="/login" element={<Login auth={authProps} />} />
               <Route path="/signup" element={<Signup auth={authProps} />} />
+              <Route path="/welcome" element={<Welcome auth={authProps} />} />
+              <Route path="/forgotpassword" element={<ForgotPassword auth={authProps} />} />
             </Routes>
           </div>
         </Router>

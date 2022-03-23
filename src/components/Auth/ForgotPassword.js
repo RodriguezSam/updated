@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
 import FormErrors from "../FormErrors";
 import Validate from "../utility/FormValidation";
-import { Auth } from "aws-amplify";
 import { Navigate } from 'react-router-dom';
+import { Auth } from 'aws-amplify';
 
-class Login extends Component {
+class ForgotPassword extends Component {
   state = {
-    username: "",
-    password: "",
+    email: "",
     errors: {
       cognito: null,
       blankfield: false
     }
-  };
+  }
 
   clearErrorState = () => {
     this.setState({
@@ -21,9 +20,9 @@ class Login extends Component {
         blankfield: false
       }
     });
-  };
+  }
 
-  handleSubmit = async event => {
+  forgotPasswordHandler = async event => {
     event.preventDefault();
 
     // Form validation
@@ -37,63 +36,45 @@ class Login extends Component {
 
     // AWS Cognito integration here
     try {
-      const user = await Auth.signIn(this.state.username, this.state.password);
-      console.log(user);
-      this.props.auth.setAuthStatus(true);
-      this.props.auth.setUser(user);
-      <Navigate to="/home" state={{ isAuthenticated: true }} />;
+      await Auth.forgotPassword(this.state.email);
+      <Navigate to='/forgotpasswordverification' />;
     }catch(error) {
-      let err = null;
-      !error.message ? err = { "message": error } : err = error;
-      this.setState({
-        errors: {
-          ...this.state.errors,
-          cognito: err
-        }
-      });
+      console.log(error);
     }
-  };
+  }
 
   onInputChange = event => {
     this.setState({
       [event.target.id]: event.target.value
     });
     document.getElementById(event.target.id).classList.remove("is-danger");
-  };
+  }
 
   render() {
     return (
       <section className="section auth">
         <div className="container">
-          <h1>Log in</h1>
+          <h1>Forgot your password?</h1>
+          <p>
+            Please enter the email address associated with your account and we'll
+            email you a password reset link.
+          </p>
           <FormErrors formerrors={this.state.errors} />
 
-          <form onSubmit={this.handleSubmit}>
+          <form onSubmit={this.forgotPasswordHandler}>
             <div className="field">
-              <p className="control">
-                <input 
-                  className="input" 
-                  type="text"
-                  id="username"
-                  aria-describedby="usernameHelp"
-                  placeholder="Enter username or email"
-                  value={this.state.username}
-                  onChange={this.onInputChange}
-                />
-              </p>
-            </div>
-            <div className="field">
-              <p className="control has-icons-left">
-                <input 
-                  className="input" 
-                  type="password"
-                  id="password"
-                  placeholder="Password"
-                  value={this.state.password}
+              <p className="control has-icons-left has-icons-right">
+                <input
+                  type="email"
+                  className="input"
+                  id="email"
+                  aria-describedby="emailHelp"
+                  placeholder="Enter email"
+                  value={this.state.email}
                   onChange={this.onInputChange}
                 />
                 <span className="icon is-small is-left">
-                  <i className="fas fa-lock"></i>
+                  <i className="fas fa-envelope"></i>
                 </span>
               </p>
             </div>
@@ -105,7 +86,7 @@ class Login extends Component {
             <div className="field">
               <p className="control">
                 <button className="button is-success">
-                  Login
+                  Submit
                 </button>
               </p>
             </div>
@@ -116,4 +97,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default ForgotPassword;

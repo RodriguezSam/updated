@@ -2,21 +2,168 @@ import React from "react";
 import "../App.css";
 import Tabs from "../components/Tabs";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import { useState } from "react";
-import userdata from "../athleteInfo.json";
-import { POST } from "../components/POST.js";
-
+import { useState, useEffect } from "react";
 
 function Dashboard() {
-  const [users, setUsers] = useState(userdata.data);
 
-  const handleDragEnd = (result) => {
-  if (!result.destination) return;
-  let athleteInfo = Array.from(users);
-  let [draggedItem] = athleteInfo.splice(result.source.index, 1);
-  athleteInfo.splice(result.destination.index, 0, draggedItem);
-  setUsers(athleteInfo);
-};
+  const POST = {
+    method: 'POST',
+    headers: { 
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        "username":"jaw645@nau.edu",
+        "password":"1fn18t#m6;8!"
+      })
+  };
+
+const [userObjects, setuser] = useState(null);
+const [snapshotObjects, setsnapshot] = useState(null);
+const [workoutObjects, setworkout] = useState(null);
+const [sampleObjects, setsample] = useState(null);
+
+// API calls that fetch data
+// returns multiple arrays of data to be accessed
+useEffect(() => {
+
+fetch('https://www.pwrlab.com/api/iaaa/login', POST)
+    .then(response => { 
+        if (!response.ok){
+        console.log('error')
+    }  
+    return response.json()
+    })
+    .then(poster => { 
+            return poster.data.access_token;
+    })
+    .then( access_token => {
+        fetch('https://www.pwrlab.com/api/connected-data/users', {
+            method: 'GET',
+            headers: { 'Authorization': 'Bearer ' + access_token}
+        })
+        .then(response => { 
+            if (!response.ok){
+            console.log('error')
+        }  
+        return response.json()
+        })
+        .then(getter => {
+             console.log('1' + getter)
+             setuser(getter)
+                })
+            })
+fetch('https://www.pwrlab.com/api/iaaa/login', POST)
+    .then(response => { 
+        if (!response.ok){
+        console.log('error')
+    }  
+    return response.json()
+    })
+    .then(poster => { 
+            return poster.data.access_token;
+    })
+    .then( access_token => {
+        fetch('https://www.pwrlab.com/api/connected-data/snapshots', {
+            method: 'GET',
+            headers: { 'Authorization': 'Bearer ' + access_token}
+        })
+        .then(response => { 
+            if (!response.ok){
+            console.log('error')
+        }  
+        return response.json()
+        })
+        .then(getter => {
+             console.log('2' + getter)
+             setsnapshot(getter)
+                })
+            })
+fetch('https://www.pwrlab.com/api/iaaa/login', POST)
+    .then(response => { 
+        if (!response.ok){
+        console.log('error')
+    }  
+    return response.json()
+    })
+    .then(poster => { 
+            return poster.data.access_token;
+    })
+    .then( access_token => {
+        fetch('https://www.pwrlab.com/api/connected-data/workouts', {
+            method: 'GET',
+            headers: { 'Authorization': 'Bearer ' + access_token}
+        })
+        .then(response => { 
+            if (!response.ok){
+            console.log('error')
+        }  
+        return response.json()
+        })
+        .then(getter => {
+             console.log('3' + getter)
+             setworkout(getter)
+                })
+            })
+fetch('https://www.pwrlab.com/api/iaaa/login', POST)
+    .then(response => { 
+        if (!response.ok){
+        console.log('error')
+    }  
+    return response.json()
+    })
+    .then(poster => { 
+            return poster.data.access_token;
+    })
+    .then( access_token => {
+        fetch('https://www.pwrlab.com/api/connected-data/samples', {
+            method: 'GET',
+            headers: { 'Authorization': 'Bearer ' + access_token}
+        })
+        .then(response => { 
+            if (!response.ok){
+            console.log('error')
+        }  
+        return response.json()
+        })
+        .then(getter => {
+             console.log('4' + getter)
+             setsample(getter)
+                })
+            })
+  },[0]);
+  const handleDragEnd1 = (result) => 
+  {
+    if (!result.destination) return;
+    let athleteInfo = Array.from(userObjects);
+    let [draggedItem] = athleteInfo.splice(result.source.index, 1);
+    athleteInfo.splice(result.destination.index, 0, draggedItem);
+    setuser(athleteInfo);
+  }
+  const handleDragEnd2 = (result) => 
+  {
+    if (!result.destination) return;
+    let athleteInfo = Array.from(snapshotObjects);
+    let [draggedItem] = athleteInfo.splice(result.source.index, 1);
+    athleteInfo.splice(result.destination.index, 0, draggedItem);
+    setsnapshot(athleteInfo);
+  }
+  const handleDragEnd3 = (result) => 
+  {
+    if (!result.destination) return;
+    let athleteInfo = Array.from(workoutObjects);
+    let [draggedItem] = athleteInfo.splice(result.source.index, 1);
+    athleteInfo.splice(result.destination.index, 0, draggedItem);
+    setworkout(athleteInfo);
+  }
+  const handleDragEnd4 = (result) => 
+  {
+    if (!result.destination) return;
+    let athleteInfo = Array.from(sampleObjects);
+    let [draggedItem] = athleteInfo.splice(result.source.index, 1);
+    athleteInfo.splice(result.destination.index, 0, draggedItem);
+    setsample(athleteInfo);
+
+  };
 
 return (
   <div>
@@ -34,7 +181,7 @@ return (
          </div>
            <Tabs>
              <div label="USERS">
-             <DragDropContext onDragEnd={handleDragEnd}>
+             <DragDropContext onDragEnd={handleDragEnd1}>
               <table>
                <thead>
                 <tr>
@@ -52,12 +199,46 @@ return (
                    <th>Updated on</th>
                 </tr>
                </thead>
-                <POST />
+               <Droppable droppableId="droppable-1">
+                 {(provider) => (
+                   <tbody
+                     className="text-capitalize"
+                     ref={provider.innerRef}
+                     {...provider.droppableProps}
+                   >
+                     {userObjects?.map((dataobject, index) => (
+                       <Draggable
+                         key={dataobject.id}
+                         draggableId={dataobject.id}
+                         index={index}
+                       >
+                         {(provider) => (
+                           <tr {...provider.draggableProps} ref={provider.innerRef}>
+                           <td {...provider.dragHandleProps}>~</td>
+                             <td>{dataobject.id}</td>
+                             <td>{dataobject.email}</td>
+                             <td>{dataobject.first_name}</td>
+                             <td>{dataobject.last_name}</td>
+                             <td>{dataobject.birth_date}</td>
+                             <td>{dataobject.birth_year}</td>
+                             <td>{dataobject.gender}</td>
+                             <td>{dataobject.height}</td>
+                             <td>{dataobject.weight}</td>
+                             <td>{dataobject.created_on}</td>
+                             <td>{dataobject.updated_on}</td>
+                           </tr>
+                         )}
+                       </Draggable>
+                     ))}
+                     {provider.placeholder}
+                   </tbody>
+                 )}
+               </Droppable>
               </table>
              </DragDropContext>
              </div>
              <div label="SNAPSHOTS">
-              <DragDropContext onDragEnd={handleDragEnd}>
+              <DragDropContext onDragEnd={handleDragEnd2}>
                <table>
                 <thead>
                  <tr>
@@ -92,36 +273,36 @@ return (
                      ref={provider.innerRef}
                      {...provider.droppableProps}
                    >
-                     {users?.map((user, index) => (
+                     {snapshotObjects?.map((dataobject, index) => (
                        <Draggable
-                         key={user.id}
-                         draggableId={user.id}
+                         key={dataobject.id}
+                         draggableId={dataobject.id}
                          index={index}
                        >
                          {(provider) => (
                            <tr {...provider.draggableProps} ref={provider.innerRef}>
                            <td {...provider.dragHandleProps}>~</td>
-                             <td>{user.id}</td>
-                             <td>{user.sample_rate}</td>
-                             <td>{user.timestamp}</td>
-                             <td>{user.acute_load_distance_based}</td>
-                             <td>{user.chronic_load_distance_based}</td>
-                             <td>{user.acwr_distance_based}</td>
-                             <td>{user.acute_load_distance_based}</td>
-                             <td>{user.chronic_load_effort_based}</td>
-                             <td>{user.acwr_effort_based}</td>
-                             <td>{user.critical_power}</td>
-                             <td>{user.consistency}</td>
-                             <td>{user.bmi}</td>
-                             <td>{user.ground_dominance}</td>
-                             <td>{user.stride_dominance}</td>
-                             <td>{user.avg_weekly_distance}</td>
-                             <td>{user.running_consistency}</td>
-                             <td>{user.avg_running_days_week}</td>
-                             <td>{user.running_experience}</td>
-                             <td>{user.run_time_of_day}</td>
-                             <td>{user.elevation_change}</td>
-                             <td>{user.running_monotony}</td>
+                             <td>{dataobject.id}</td>
+                             <td>{dataobject.sample_rate}</td>
+                             <td>{dataobject.timestamp}</td>
+                             <td>{dataobject.acute_load_distance_based}</td>
+                             <td>{dataobject.chronic_load_distance_based}</td>
+                             <td>{dataobject.acwr_distance_based}</td>
+                             <td>{dataobject.acute_load_distance_based}</td>
+                             <td>{dataobject.chronic_load_effort_based}</td>
+                             <td>{dataobject.acwr_effort_based}</td>
+                             <td>{dataobject.critical_power}</td>
+                             <td>{dataobject.consistency}</td>
+                             <td>{dataobject.bmi}</td>
+                             <td>{dataobject.ground_dominance}</td>
+                             <td>{dataobject.stride_dominance}</td>
+                             <td>{dataobject.avg_weekly_distance}</td>
+                             <td>{dataobject.running_consistency}</td>
+                             <td>{dataobject.avg_running_days_week}</td>
+                             <td>{dataobject.running_experience}</td>
+                             <td>{dataobject.run_time_of_day}</td>
+                             <td>{dataobject.elevation_change}</td>
+                             <td>{dataobject.running_monotony}</td>
                            </tr>
                          )}
                        </Draggable>
@@ -134,7 +315,7 @@ return (
               </DragDropContext>
              </div>
              <div label="WORKOUTS">
-              <DragDropContext onDragEnd={handleDragEnd}>
+              <DragDropContext onDragEnd={handleDragEnd3}>
                <table>
                 <thead>
                  <tr>
@@ -251,118 +432,118 @@ return (
                      ref={provider.innerRef}
                      {...provider.droppableProps}
                    >
-                     {users?.map((user, index) => (
+                     {workoutObjects?.map((dataobject, index) => (
                        <Draggable
-                         key={user.name}
-                         draggableId={user.name}
+                         key={dataobject.id}
+                         draggableId={dataobject.id}
                          index={index}
                        >
                          {(provider) => (
                            <tr {...provider.draggableProps} ref={provider.innerRef}>
                              <td {...provider.dragHandleProps}>~</td>
-                             <td>{user.id}</td>
-                             <td>{user.utc_start_time}</td>
-                             <td>{user.local_start_time}</td>
-                             <td>{user.start_latitude}</td>
-                             <td>{user.start_longitude}</td>
-                             <td>{user.end_latitude}</td>
-                             <td>{user.end_longitude}</td>
-                             <td>{user.elevation_gain}</td>
-                             <td>{user.elevation_loss}</td>
-                             <td>{user.average_heartrate}</td>
-                             <td>{user.maximum_heartrate}</td>
-                             <td>{user.average_cadence}</td>
-                             <td>{user.average_steps_per_min}</td>
-                             <td>{user.total_step_count}</td>
-                             <td>{user.distance}</td>
-                             <td>{user.duration}</td>
-                             <td>{user.elapsed_duration}</td>
-                             <td>{user.average_pace_duration}</td>
-                             <td>{user.average_pace_elapsed_duration}</td>
-                             <td>{user.type}</td>
-                             <td>{user.duration_moving}</td>
-                             <td>{user.duration_not_moving}</td>
-                             <td>{user.endpoints_straight_line_distance}</td>
-                             <td>{user.vendor}</td>
-                             <td>{user.average_power}</td>
-                             <td>{user.average_velocity}</td>
-                             <td>{user.average_gct}</td>
-                             <td>{user.average_stride_time}</td>
-                             <td>{user.average_stride_length}</td>
-                             <td>{user.average_flight_time}</td>
-                             <td>{user.average_kvert}</td>
-                             <td>{user.weighted_load}</td>
-                             <td>{user.w5sec}</td>
-                             <td>{user.w15sec}</td>
-                             <td>{user.w30sec}</td>
-                             <td>{user.w1min}</td>
-                             <td>{user.w3min}</td>
-                             <td>{user.w5min}</td>
-                             <td>{user.w9min}</td>
-                             <td>{user.w10min}</td>
-                             <td>{user.w20min}</td>
-                             <td>{user.w30min}</td>
-                             <td>{user.w1hr}</td>
-                             <td>{user.duration_stop}</td>
-                             <td>{user.duration_walk}</td>
-                             <td>{user.duration_run}</td>
-                             <td>{user.duration_zone_0_walk}</td>
-                             <td>{user.duration_zone_1_walk}</td>
-                             <td>{user.duration_zone_2_walk}</td>
-                             <td>{user.duration_zone_3_walk}</td>
-                             <td>{user.duration_zone_4_walk}</td>
-                             <td>{user.duration_zone_5_walk}</td>
-                             <td>{user.duration_zone_0_run}</td>
-                             <td>{user.duration_zone_1_run}</td>
-                             <td>{user.duration_zone_2_run}</td>
-                             <td>{user.duration_zone_3_run}</td>
-                             <td>{user.duration_zone_4_run}</td>
-                             <td>{user.duration_zone_5_run}</td>
-                             <td>{user.total_distance_stop}</td>
-                             <td>{user.total_distance_walk}</td>
-                             <td>{user.total_distance_run}</td>
-                             <td>{user.total_distance_zone_0_walk}</td>
-                             <td>{user.total_distance_zone_1_walk}</td>
-                             <td>{user.total_distance_zone_2_walk}</td>
-                             <td>{user.total_distance_zone_3_walk}</td>
-                             <td>{user.total_distance_zone_4_walk}</td>
-                             <td>{user.total_distance_zone_5_walk}</td>
-                             <td>{user.total_distance_zone_0_run}</td>
-                             <td>{user.total_distance_zone_1_run}</td>
-                             <td>{user.total_distance_zone_2_run}</td>
-                             <td>{user.total_distance_zone_3_run}</td>
-                             <td>{user.total_distance_zone_4_run}</td>
-                             <td>{user.total_distance_zone_5_run}</td>
-                             <td>{user.average_hr_stop}</td>
-                             <td>{user.average_hr_walk}</td>
-                             <td>{user.average_hr_run}</td>
-                             <td>{user.average_hr_zone_0_walk}</td>
-                             <td>{user.average_hr_zone_1_walk}</td>
-                             <td>{user.average_hr_zone_2_walk}</td>
-                             <td>{user.average_hr_zone_3_walk}</td>
-                             <td>{user.average_hr_zone_4_walk}</td>
-                             <td>{user.average_hr_zone_5_walk}</td>
-                             <td>{user.average_hr_zone_0_run}</td>
-                             <td>{user.average_hr_zone_1_run}</td>
-                             <td>{user.average_hr_zone_2_run}</td>
-                             <td>{user.average_hr_zone_3_run}</td>
-                             <td>{user.average_hr_zone_4_run}</td>
-                             <td>{user.average_hr_zone_5_run}</td>
-                             <td>{user.average_power_stop}</td>
-                             <td>{user.average_power_walk}</td>
-                             <td>{user.average_power_run}</td>
-                             <td>{user.average_power_zone_0_walk}</td>
-                             <td>{user.average_power_zone_1_walk}</td>
-                             <td>{user.average_power_zone_2_walk}</td>
-                             <td>{user.average_power_zone_3_walk}</td>
-                             <td>{user.average_power_zone_4_walk}</td>
-                             <td>{user.average_power_zone_5_walk}</td>
-                             <td>{user.average_power_zone_0_run}</td>
-                             <td>{user.average_power_zone_1_run}</td>
-                             <td>{user.average_power_zone_2_run}</td>
-                             <td>{user.average_power_zone_3_run}</td>
-                             <td>{user.average_power_zone_4_run}</td>
-                             <td>{user.average_power_zone_5_run}</td>
+                             <td>{dataobject.id}</td>
+                             <td>{dataobject.utc_start_time}</td>
+                             <td>{dataobject.local_start_time}</td>
+                             <td>{dataobject.start_latitude}</td>
+                             <td>{dataobject.start_longitude}</td>
+                             <td>{dataobject.end_latitude}</td>
+                             <td>{dataobject.end_longitude}</td>
+                             <td>{dataobject.elevation_gain}</td>
+                             <td>{dataobject.elevation_loss}</td>
+                             <td>{dataobject.average_heartrate}</td>
+                             <td>{dataobject.maximum_heartrate}</td>
+                             <td>{dataobject.average_cadence}</td>
+                             <td>{dataobject.average_steps_per_min}</td>
+                             <td>{dataobject.total_step_count}</td>
+                             <td>{dataobject.distance}</td>
+                             <td>{dataobject.duration}</td>
+                             <td>{dataobject.elapsed_duration}</td>
+                             <td>{dataobject.average_pace_duration}</td>
+                             <td>{dataobject.average_pace_elapsed_duration}</td>
+                             <td>{dataobject.type}</td>
+                             <td>{dataobject.duration_moving}</td>
+                             <td>{dataobject.duration_not_moving}</td>
+                             <td>{dataobject.endpoints_straight_line_distance}</td>
+                             <td>{dataobject.vendor}</td>
+                             <td>{dataobject.average_power}</td>
+                             <td>{dataobject.average_velocity}</td>
+                             <td>{dataobject.average_gct}</td>
+                             <td>{dataobject.average_stride_time}</td>
+                             <td>{dataobject.average_stride_length}</td>
+                             <td>{dataobject.average_flight_time}</td>
+                             <td>{dataobject.average_kvert}</td>
+                             <td>{dataobject.weighted_load}</td>
+                             <td>{dataobject.w5sec}</td>
+                             <td>{dataobject.w15sec}</td>
+                             <td>{dataobject.w30sec}</td>
+                             <td>{dataobject.w1min}</td>
+                             <td>{dataobject.w3min}</td>
+                             <td>{dataobject.w5min}</td>
+                             <td>{dataobject.w9min}</td>
+                             <td>{dataobject.w10min}</td>
+                             <td>{dataobject.w20min}</td>
+                             <td>{dataobject.w30min}</td>
+                             <td>{dataobject.w1hr}</td>
+                             <td>{dataobject.duration_stop}</td>
+                             <td>{dataobject.duration_walk}</td>
+                             <td>{dataobject.duration_run}</td>
+                             <td>{dataobject.duration_zone_0_walk}</td>
+                             <td>{dataobject.duration_zone_1_walk}</td>
+                             <td>{dataobject.duration_zone_2_walk}</td>
+                             <td>{dataobject.duration_zone_3_walk}</td>
+                             <td>{dataobject.duration_zone_4_walk}</td>
+                             <td>{dataobject.duration_zone_5_walk}</td>
+                             <td>{dataobject.duration_zone_0_run}</td>
+                             <td>{dataobject.duration_zone_1_run}</td>
+                             <td>{dataobject.duration_zone_2_run}</td>
+                             <td>{dataobject.duration_zone_3_run}</td>
+                             <td>{dataobject.duration_zone_4_run}</td>
+                             <td>{dataobject.duration_zone_5_run}</td>
+                             <td>{dataobject.total_distance_stop}</td>
+                             <td>{dataobject.total_distance_walk}</td>
+                             <td>{dataobject.total_distance_run}</td>
+                             <td>{dataobject.total_distance_zone_0_walk}</td>
+                             <td>{dataobject.total_distance_zone_1_walk}</td>
+                             <td>{dataobject.total_distance_zone_2_walk}</td>
+                             <td>{dataobject.total_distance_zone_3_walk}</td>
+                             <td>{dataobject.total_distance_zone_4_walk}</td>
+                             <td>{dataobject.total_distance_zone_5_walk}</td>
+                             <td>{dataobject.total_distance_zone_0_run}</td>
+                             <td>{dataobject.total_distance_zone_1_run}</td>
+                             <td>{dataobject.total_distance_zone_2_run}</td>
+                             <td>{dataobject.total_distance_zone_3_run}</td>
+                             <td>{dataobject.total_distance_zone_4_run}</td>
+                             <td>{dataobject.total_distance_zone_5_run}</td>
+                             <td>{dataobject.average_hr_stop}</td>
+                             <td>{dataobject.average_hr_walk}</td>
+                             <td>{dataobject.average_hr_run}</td>
+                             <td>{dataobject.average_hr_zone_0_walk}</td>
+                             <td>{dataobject.average_hr_zone_1_walk}</td>
+                             <td>{dataobject.average_hr_zone_2_walk}</td>
+                             <td>{dataobject.average_hr_zone_3_walk}</td>
+                             <td>{dataobject.average_hr_zone_4_walk}</td>
+                             <td>{dataobject.average_hr_zone_5_walk}</td>
+                             <td>{dataobject.average_hr_zone_0_run}</td>
+                             <td>{dataobject.average_hr_zone_1_run}</td>
+                             <td>{dataobject.average_hr_zone_2_run}</td>
+                             <td>{dataobject.average_hr_zone_3_run}</td>
+                             <td>{dataobject.average_hr_zone_4_run}</td>
+                             <td>{dataobject.average_hr_zone_5_run}</td>
+                             <td>{dataobject.average_power_stop}</td>
+                             <td>{dataobject.average_power_walk}</td>
+                             <td>{dataobject.average_power_run}</td>
+                             <td>{dataobject.average_power_zone_0_walk}</td>
+                             <td>{dataobject.average_power_zone_1_walk}</td>
+                             <td>{dataobject.average_power_zone_2_walk}</td>
+                             <td>{dataobject.average_power_zone_3_walk}</td>
+                             <td>{dataobject.average_power_zone_4_walk}</td>
+                             <td>{dataobject.average_power_zone_5_walk}</td>
+                             <td>{dataobject.average_power_zone_0_run}</td>
+                             <td>{dataobject.average_power_zone_1_run}</td>
+                             <td>{dataobject.average_power_zone_2_run}</td>
+                             <td>{dataobject.average_power_zone_3_run}</td>
+                             <td>{dataobject.average_power_zone_4_run}</td>
+                             <td>{dataobject.average_power_zone_5_run}</td>
                            </tr>
                          )}
                        </Draggable>
@@ -375,7 +556,7 @@ return (
               </DragDropContext>
              </div>
              <div label="SAMPLES">
-              <DragDropContext onDragEnd={handleDragEnd}>
+              <DragDropContext onDragEnd={handleDragEnd4}>
                <table>
                 <thead>
                  <tr>
@@ -417,43 +598,43 @@ return (
                      ref={provider.innerRef}
                      {...provider.droppableProps}
                    >
-                     {users?.map((user, index) => (
+                     {sampleObjects?.map((dataobject, index) => (
                        <Draggable
-                         key={user.id}
-                         draggableId={user.id}
+                         key={dataobject.id}
+                         draggableId={dataobject.id}
                          index={index}
                        >
                          {(provider) => (
                            <tr {...provider.draggableProps} ref={provider.innerRef}>
                              <td {...provider.dragHandleProps}>~</td>
-                             <td>{user.id}</td>
-                             <td>{user.workout}</td>
-                             <td>{user.elapsed_time}</td>
-                             <td>{user.elevation}</td>
-                             <td>{user.local_time}</td>
-                             <td>{user.latitude}</td>
-                             <td>{user.longitude}</td>
-                             <td>{user.flight_time}</td>
-                             <td>{user.gct}</td>
-                             <td>{user.grade}</td>
-                             <td>{user.heartrate}</td>
-                             <td>{user.kvert}</td>
-                             <td>{user.cadence}</td>
-                             <td>{user.moving}</td>
-                             <td>{user.power}</td>
-                             <td>{user.speed}</td>
-                             <td>{user.stride_length}</td>
-                             <td>{user.stride_time}</td>
-                             <td>{user.bearing}</td>
-                             <td>{user.temperature}</td>
-                             <td>{user.ehpe}</td>
-                             <td>{user.velocity}</td>
-                             <td>{user.vertical_speed}</td>
-                             <td>{user.weighted_effort}</td>
-                             <td>{user.device_paused}</td>
-                             <td>{user.device_start_event}</td>
-                             <td>{user.device_stop_event}</td>
-                             <td>{user.device_event_time}</td>
+                             <td>{dataobject.id}</td>
+                             <td>{dataobject.workout}</td>
+                             <td>{dataobject.elapsed_time}</td>
+                             <td>{dataobject.elevation}</td>
+                             <td>{dataobject.local_time}</td>
+                             <td>{dataobject.latitude}</td>
+                             <td>{dataobject.longitude}</td>
+                             <td>{dataobject.flight_time}</td>
+                             <td>{dataobject.gct}</td>
+                             <td>{dataobject.grade}</td>
+                             <td>{dataobject.heartrate}</td>
+                             <td>{dataobject.kvert}</td>
+                             <td>{dataobject.cadence}</td>
+                             <td>{dataobject.moving}</td>
+                             <td>{dataobject.power}</td>
+                             <td>{dataobject.speed}</td>
+                             <td>{dataobject.stride_length}</td>
+                             <td>{dataobject.stride_time}</td>
+                             <td>{dataobject.bearing}</td>
+                             <td>{dataobject.temperature}</td>
+                             <td>{dataobject.ehpe}</td>
+                             <td>{dataobject.velocity}</td>
+                             <td>{dataobject.vertical_speed}</td>
+                             <td>{dataobject.weighted_effort}</td>
+                             <td>{dataobject.device_paused}</td>
+                             <td>{dataobject.device_start_event}</td>
+                             <td>{dataobject.device_stop_event}</td>
+                             <td>{dataobject.device_event_time}</td>
                            </tr>
                          )}
                        </Draggable>

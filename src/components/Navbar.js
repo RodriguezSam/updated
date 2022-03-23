@@ -27,10 +27,8 @@ export default class Navbar extends Component {
               <Link to="/home"><span class="glyphicon glyphicon-home"></span> Home</Link>
             </li>
               {this.props.auth.isAuthenticated && this.props.auth.user && (
-                <li className='nav-item'>
-                  <p>
-                    Hello {this.props.auth.user.username}
-                  </p>
+                <li className='nav nav-item'>
+                  <Link to="#">Hello {this.props.auth.user.username}</Link>
                 </li>
                 )}
               {!this.props.auth.isAuthenticated && (
@@ -55,7 +53,7 @@ export default class Navbar extends Component {
                   <Link to="/Chat"><span class="glyphicon glyphicon-comment"></span> Chat</Link>
                 </li>
                 <li className='nav-item'>
-                  <Link className='nav-link' to='/login' onClick={this.handleLogOut}>Logout</Link>
+                  <Link to='/' onClick={this.handleLogOut}>Logout</Link>
                 </li>
                 </>
               )} 

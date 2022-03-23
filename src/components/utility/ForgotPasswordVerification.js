@@ -1,33 +1,29 @@
 import React, { Component } from 'react';
-import { Navigate } from 'react-router-dom';
 import FormErrors from "../FormErrors";
 import Validate from "../utility/FormValidation";
-import { Auth } from "aws-amplify";
+import { Auth } from 'aws-amplify';
 
-class Signup extends Component {
+class ForgotPasswordVerification extends Component {
   state = {
-    username: "",
+    verificationcode: "",
     email: "",
-    password: "",
-    confirmpassword: "",
+    newpassword: "",
     errors: {
       cognito: null,
-      blankfield: false,
-      passwordmatch: false
+      blankfield: false
     }
-  }
+  };
 
   clearErrorState = () => {
     this.setState({
       errors: {
         cognito: null,
-        blankfield: false,
-        passwordmatch: false
+        blankfield: false
       }
     });
-  }
+  };
 
-  handleSubmit = async event => {
+  passwordVerificationHandler = async event => {
     event.preventDefault();
 
     // Form validation
@@ -40,59 +36,52 @@ class Signup extends Component {
     }
 
     // AWS Cognito integration here
-    const { username, email, password } = this.state;
     try {
-      const signUpResponse = await Auth.signUp({
-        username,
-        password,
-        attributes: {
-          email: email
-        }
-      });
-      <Navigate to="/welcome" state={{ isAuthenticated: true }} />;
-      console.log(signUpResponse);
-    } catch (error) {
-      let err = null;
-      !error.message ? err = { "message": error } : err = error;
-      this.setState({
-        errors: {
-          ...this.state.errors,
-          cognito: err
-        }
-      });
+      await Auth.forgotPasswordSubmit(
+        this.state.email,
+        this.state.verificationcode,
+        this.state.newpassword
+      );
+      this.props.history.push("/changepasswordconfirmation");
+    }catch(error) {
+      console.log(error);
     }
-  }
+  };
 
   onInputChange = event => {
     this.setState({
       [event.target.id]: event.target.value
     });
     document.getElementById(event.target.id).classList.remove("is-danger");
-  }
+  };
 
   render() {
     return (
       <section className="section auth">
         <div className="container">
-          <h1>Signup for an account</h1>
+          <h1>Set new password</h1>
+          <p>
+            Please enter the verification code sent to your email address below,
+            your email address and a new password.
+          </p>
           <FormErrors formerrors={this.state.errors} />
 
-          <form onSubmit={this.handleSubmit}>
+          <form onSubmit={this.passwordVerificationHandler}>
             <div className="field">
               <p className="control">
-                <input 
-                  className="input" 
+                <input
                   type="text"
-                  id="username"
-                  aria-describedby="userNameHelp"
-                  placeholder="Enter username"
-                  value={this.state.username}
+                  className="input"
+                  id="verificationcode"
+                  aria-describedby="verificationCodeHelp"
+                  placeholder="Enter verification code"
+                  value={this.state.verificationcode}
                   onChange={this.onInputChange}
                 />
               </p>
             </div>
             <div className="field">
-              <p className="control has-icons-left has-icons-right">
+              <p className="control has-icons-left">
                 <input 
                   className="input" 
                   type="email"
@@ -109,43 +98,23 @@ class Signup extends Component {
             </div>
             <div className="field">
               <p className="control has-icons-left">
-                <input 
-                  className="input" 
+                <input
                   type="password"
-                  id="password"
-                  placeholder="Password"
-                  value={this.state.password}
+                  className="input"
+                  id="newpassword"
+                  placeholder="New password"
+                  value={this.state.newpassword}
                   onChange={this.onInputChange}
                 />
                 <span className="icon is-small is-left">
                   <i className="fas fa-lock"></i>
                 </span>
-              </p>
-            </div>
-            <div className="field">
-              <p className="control has-icons-left">
-                <input 
-                  className="input" 
-                  type="password"
-                  id="confirmpassword"
-                  placeholder="Confirm password"
-                  value={this.state.confirmpassword}
-                  onChange={this.onInputChange}
-                />
-                <span className="icon is-small is-left">
-                  <i className="fas fa-lock"></i>
-                </span>
-              </p>
-            </div>
-            <div className="field">
-              <p className="control">
-                <a href="/forgotpassword">Forgot password?</a>
               </p>
             </div>
             <div className="field">
               <p className="control">
                 <button className="button is-success">
-                  Register
+                  Submit
                 </button>
               </p>
             </div>
@@ -156,4 +125,4 @@ class Signup extends Component {
   }
 }
 
-export default Signup;
+export default ForgotPasswordVerification;
