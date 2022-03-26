@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Navigate } from 'react-router-dom';
 import FormErrors from "../FormErrors";
 import Validate from "../utility/FormValidation";
 import { Auth } from "aws-amplify";
+import { useNavigate } from "react-router-dom";
+
 
 class Signup extends Component {
   state = {
@@ -49,7 +50,7 @@ class Signup extends Component {
           email: email
         }
       });
-      <Navigate to="/welcome" state={{ isAuthenticated: true }} />;
+      this.props.history.push("/welcome");
       console.log(signUpResponse);
     } catch (error) {
       let err = null;
@@ -74,7 +75,7 @@ class Signup extends Component {
     return (
       <section className="section auth">
         <div className="container">
-          <h1>Signup for an account</h1>
+          <h1>Register</h1>
           <FormErrors formerrors={this.state.errors} />
 
           <form onSubmit={this.handleSubmit}>
