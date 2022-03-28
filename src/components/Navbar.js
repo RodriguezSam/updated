@@ -10,6 +10,7 @@ export default class Navbar extends Component {
       Auth.signOut();
       this.props.auth.setAuthStatus(false);
       this.props.auth.setUser(null);
+
     }catch(error) {
       console.log(error.message);
     }
@@ -53,7 +54,7 @@ export default class Navbar extends Component {
                   <Link to="/Chat"><span class="glyphicon glyphicon-comment"></span> Chat</Link>
                 </li>
                 <li className='nav-item'>
-                  <Link to='/' onClick={this.handleLogOut}>Logout</Link>
+                  <Link to='/login' onClick={this.handleLogOut}>Logout</Link>
                 </li>
                 </>
               )} 

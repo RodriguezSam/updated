@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import FormErrors from "../FormErrors";
 import Validate from "../utility/FormValidation";
 import { Auth } from "aws-amplify";
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
 
 class Login extends Component {
   state = {
@@ -41,7 +42,7 @@ class Login extends Component {
       console.log(user);
       this.props.auth.setAuthStatus(true);
       this.props.auth.setUser(user);
-      <Navigate to="/home" state={{ isAuthenticated: true }} />;
+      //<Navigate to="/home" state={{ isAuthenticated: true }} />;
     }catch(error) {
       let err = null;
       !error.message ? err = { "message": error } : err = error;
@@ -53,6 +54,11 @@ class Login extends Component {
       });
     }
   };
+
+  navigator=()=>{
+    let navigate = useNavigate();
+    navigate('/home');
+  }
 
   onInputChange = event => {
     this.setState({
@@ -104,7 +110,7 @@ class Login extends Component {
             </div>
             <div className="field">
               <p className="control">
-                <button className="button is-success">
+                <button className="button is-success" onClick={navigator}>
                   Login
                 </button>
               </p>
