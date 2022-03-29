@@ -19,7 +19,7 @@ const apiKey = 'h2k698p4kj4w'
 
 const user = {
   id: 'rylee',
-  name: 'Rylee Mitchell',
+  name: 'Jonathan White Velasco',
 }
 
 const filters = {type: 'messaging', members: { $in: [user.id] }}
