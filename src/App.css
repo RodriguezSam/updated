@@ -32,14 +32,6 @@ td:nth-child(even) {
   background-color: #dddddd;
 }
 
-.BackgroundImage {
-  background-image: url("./components/back.jpg");
-  min-height: max-content;
-  column-span: all;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-}
-
 .right {
   text-align: right;
   float: right;

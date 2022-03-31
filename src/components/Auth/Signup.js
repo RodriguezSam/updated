@@ -79,6 +79,7 @@ class Signup extends Component {
           <FormErrors formerrors={this.state.errors} />
 
           <form onSubmit={this.handleSubmit}>
+            <h2 style="color:white;" >Welcome Back!</h2>
             <div className="field">
               <p className="control">
                 <input 

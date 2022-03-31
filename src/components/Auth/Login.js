@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import FormErrors from "../FormErrors";
 import Validate from "../utility/FormValidation";
 import { Auth } from "aws-amplify";
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import "./form.css"
 
 
 class Login extends Component {
@@ -55,11 +56,6 @@ class Login extends Component {
     }
   };
 
-  navigator=()=>{
-    let navigate = useNavigate();
-    navigate('/home');
-  }
-
   onInputChange = event => {
     this.setState({
       [event.target.id]: event.target.value
@@ -69,16 +65,16 @@ class Login extends Component {
 
   render() {
     return (
-      <section className="section auth">
-        <div className="container">
-          <h1>Log in</h1>
-          <FormErrors formerrors={this.state.errors} />
-
+      <section className="design">
+        <div className="appAside" />
+        <div className='appForm'>
+         <h1>Welcome back!</h1>
+         <FormErrors formerrors={this.state.errors} />
           <form onSubmit={this.handleSubmit}>
             <div className="field">
               <p className="control">
                 <input 
-                  className="input" 
+                  className="input formFieldInput" 
                   type="text"
                   id="username"
                   aria-describedby="usernameHelp"
@@ -89,28 +85,23 @@ class Login extends Component {
               </p>
             </div>
             <div className="field">
-              <p className="control has-icons-left">
+              <p>
                 <input 
-                  className="input" 
+                  className="input formFieldInput" 
                   type="password"
                   id="password"
                   placeholder="Password"
                   value={this.state.password}
                   onChange={this.onInputChange}
                 />
-                <span className="icon is-small is-left">
-                  <i className="fas fa-lock"></i>
-                </span>
               </p>
             </div>
-            <div className="field">
-              <p className="control">
-                <a href="/forgotpassword">Forgot password?</a>
+              <p className="control formField">
+                <Link className='formFieldLink' to="/forgotpassword">Forgot password?</Link>
               </p>
-            </div>
             <div className="field">
               <p className="control">
-                <button className="button is-success" onClick={navigator}>
+                <button className="button is-success formFieldButton" >
                   Login
                 </button>
               </p>

@@ -40,6 +40,37 @@ const Email = () => {
     }))
   }
 
+  const [form2, setform2Input] = useState({
+    name: '', 
+    sender_email: '',
+    recipient_email: '',
+  });
+
+  const handleForm2 = (e) => {
+    e.preventDefault();
+    emailjs.send('service_xug82mn', 'template_ybqig6r', form1, 'c4nT4o57gCX4dBxpv')
+    .then(response => {
+          console.log('Email successfully sent!', response);
+          setform2Input({
+            workout: '',
+            name: '', 
+            sender_email: '',
+            recipient_email: '',
+            exercise_details: ''
+          });
+          setStatus('SUCCESS');
+        }, error => {
+          console.log('MESSAGE FAILURE', error);
+        });
+      }
+
+  const handleChange2 = (e) => {
+    setform2Input(form2 => ({
+        ...form2,
+        [e.target.name]: e.target.value
+    }))
+  }
+
   useEffect(() => {
     if(status === 'SUCCESS') {
       setTimeout(() => {

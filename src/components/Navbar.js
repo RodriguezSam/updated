@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { Auth } from 'aws-amplify';
 import "../App.css";
 
@@ -10,7 +10,7 @@ export default class Navbar extends Component {
       Auth.signOut();
       this.props.auth.setAuthStatus(false);
       this.props.auth.setUser(null);
-
+      <Navigate to="/login" />
     }catch(error) {
       console.log(error.message);
     }
@@ -20,7 +20,7 @@ export default class Navbar extends Component {
     return (
       <nav className='nav navbar-inverse'>
           <div class="navbar-header">
-            <Link className='navbar-brand' to='/'>Team Success Portal</Link>
+            <Link className='navbar-brand' to='/home'>Team Success Portal</Link>
           </div>
           
           <ul class="nav navbar-nav right">

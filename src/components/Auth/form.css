@@ -1,4 +1,63 @@
-.content {
-  max-width: 500px;
-  margin: auto;
+.design {
+  height: 100vh;
+  display: flex;
+  color: white;
 }
+
+.appAside {
+  width: 50%;
+  background-image: url(/src/components/Auth/mountain.jpg);
+}
+
+.appForm {
+  width: 50%;
+  background-color: #12130f;
+  padding: 25px 40px;
+  overflow: auto;
+  color: white;
+
+}
+
+.formCenter {
+  margin-bottom: 100px;
+}
+
+.formField {
+  margin-bottom: 10px;
+}
+
+.formFieldInput {
+  width: 70%;
+  background-color: transparent;
+  border: none;
+  color: white;
+  outline: none;
+  border-bottom: 1.5px solid #187561;
+  font-size: 1em;
+  font-weight: 300;
+  padding-bottom: 10px;
+  margin-top: 10px;
+}
+
+.formFieldInput::placeholder {
+  color: #c1ece5;
+}
+
+.formFieldButton {
+  background-color: #399283;
+  color: black;
+  border: none;
+  width: 35%;
+  outline: none;
+  border-radius: 25px;
+  padding: 8px;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.formFieldLink {
+  color: #187561;
+  text-decoration: none;
+  display: inline-block;
+}
+
