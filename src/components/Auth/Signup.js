@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import FormErrors from "../FormErrors";
-import Validate from "../utility/FormValidation";
+import Validate from "../Utility/FormValidation";
 import { Auth } from "aws-amplify";
-import { useNavigate } from "react-router-dom";
 
 
 class Signup extends Component {
@@ -73,86 +72,80 @@ class Signup extends Component {
 
   render() {
     return (
-      <section className="section auth">
-        <div className="container">
-          <h1>Register</h1>
-          <FormErrors formerrors={this.state.errors} />
+      <section className="register-design">
+        <div className="" />
+          <div className="signupSection">
+            <h1>Register</h1>
+            <FormErrors formerrors={this.state.errors} />
 
-          <form onSubmit={this.handleSubmit}>
-            <h2 style="color:white;" >Welcome Back!</h2>
-            <div className="field">
-              <p className="control">
-                <input 
-                  className="input" 
-                  type="text"
-                  id="username"
-                  aria-describedby="userNameHelp"
-                  placeholder="Enter username"
-                  value={this.state.username}
-                  onChange={this.onInputChange}
-                />
-              </p>
-            </div>
-            <div className="field">
-              <p className="control has-icons-left has-icons-right">
-                <input 
-                  className="input" 
-                  type="email"
-                  id="email"
-                  aria-describedby="emailHelp"
-                  placeholder="Enter email"
-                  value={this.state.email}
-                  onChange={this.onInputChange}
-                />
-                <span className="icon is-small is-left">
-                  <i className="fas fa-envelope"></i>
-                </span>
-              </p>
-            </div>
-            <div className="field">
-              <p className="control has-icons-left">
-                <input 
-                  className="input" 
-                  type="password"
-                  id="password"
-                  placeholder="Password"
-                  value={this.state.password}
-                  onChange={this.onInputChange}
-                />
-                <span className="icon is-small is-left">
-                  <i className="fas fa-lock"></i>
-                </span>
-              </p>
-            </div>
-            <div className="field">
-              <p className="control has-icons-left">
-                <input 
-                  className="input" 
-                  type="password"
-                  id="confirmpassword"
-                  placeholder="Confirm password"
-                  value={this.state.confirmpassword}
-                  onChange={this.onInputChange}
-                />
-                <span className="icon is-small is-left">
-                  <i className="fas fa-lock"></i>
-                </span>
-              </p>
-            </div>
-            <div className="field">
-              <p className="control">
-                <a href="/forgotpassword">Forgot password?</a>
-              </p>
-            </div>
-            <div className="field">
-              <p className="control">
-                <button className="button is-success">
-                  Register
-                </button>
-              </p>
-            </div>
-          </form>
-        </div>
+            <form onSubmit={this.handleSubmit}>
+              <div className='section'>
+                <h2>Welcome to the Team Success Portal!</h2>
+                <div className="field">
+                  <p className="control">
+                    <input 
+                      className="input" 
+                      type="text"
+                      id="username"
+                      aria-describedby="userNameHelp"
+                      placeholder="Enter username"
+                      value={this.state.username}
+                      onChange={this.onInputChange}
+                    />
+                  </p>
+                </div>
+                <div className="field">
+                  <p className="control">
+                    <input 
+                      className="input" 
+                      type="email"
+                      id="email"
+                      aria-describedby="emailHelp"
+                      placeholder="Enter email"
+                      value={this.state.email}
+                      onChange={this.onInputChange}
+                    />
+                  </p>
+                </div>
+                <div className="field">
+                  <p className="control">
+                    <input 
+                      className="input" 
+                      type="password"
+                      id="password"
+                      placeholder="Password"
+                      value={this.state.password}
+                      onChange={this.onInputChange}
+                    />
+                  </p>
+                </div>
+                <div className="field">
+                  <p className="control">
+                    <input 
+                      className="input" 
+                      type="password"
+                      id="confirmpassword"
+                      placeholder="Confirm password"
+                      value={this.state.confirmpassword}
+                      onChange={this.onInputChange}
+                    />
+                  </p>
+                </div>
+                <div className="field">
+                  <p className="control">
+                    <a href="/forgotpassword">Forgot password?</a>
+                  </p>
+                </div>
+                <div className="field">
+                  <p className="control">
+                    <button className="button is-success">
+                      Sign Up
+                    </button>
+                  </p>
+                </div>
+              </div>
+           </form>
+          </div>
       </section>
     );
   }

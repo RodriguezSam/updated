@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import FormErrors from "../FormErrors";
 import Validate from "../Utility/FormValidation";
-import { Navigate } from 'react-router-dom';
 import { Auth } from 'aws-amplify';
 
-class ForgotPassword extends Component {
+class ForgotPasswordVerification extends Component {
   state = {
+    verificationcode: "",
     email: "",
+    newpassword: "",
     errors: {
       cognito: null,
       blankfield: false
     }
-  }
+  };
 
   clearErrorState = () => {
     this.setState({
@@ -20,9 +21,9 @@ class ForgotPassword extends Component {
         blankfield: false
       }
     });
-  }
+  };
 
-  forgotPasswordHandler = async event => {
+  passwordVerificationHandler = async event => {
     event.preventDefault();
 
     // Form validation
@@ -36,51 +37,72 @@ class ForgotPassword extends Component {
 
     // AWS Cognito integration here
     try {
-      await Auth.forgotPassword(this.state.email);
-      <Navigate to='/forgotpasswordverification' />;
+      await Auth.forgotPasswordSubmit(
+        this.state.email,
+        this.state.verificationcode,
+        this.state.newpassword
+      );
+      this.props.history.push("/changepasswordconfirmation");
     }catch(error) {
       console.log(error);
     }
-  }
+  };
 
   onInputChange = event => {
     this.setState({
       [event.target.id]: event.target.value
     });
     document.getElementById(event.target.id).classList.remove("is-danger");
-  }
+  };
 
   render() {
     return (
       <section className="section auth">
         <div className="container">
-          <h1>Forgot your password?</h1>
+          <h1>Create a new password: </h1>
           <p>
-            Please enter the email address associated with your account and we'll
-            email you a password reset link.
+            Please enter the verification code sent to your email address below,
+            your email address and a new password.
           </p>
           <FormErrors formerrors={this.state.errors} />
 
-          <form onSubmit={this.forgotPasswordHandler}>
+          <form onSubmit={this.passwordVerificationHandler}>
             <div className="field">
-              <p className="control has-icons-left has-icons-right">
+              <p className="control">
                 <input
-                  type="email"
+                  type="text"
                   className="input"
+                  id="verificationcode"
+                  aria-describedby="verificationCodeHelp"
+                  placeholder="Enter verification code"
+                  value={this.state.verificationcode}
+                  onChange={this.onInputChange}
+                />
+              </p>
+            </div>
+            <div className="field">
+              <p className="control">
+                <input 
+                  className="input" 
+                  type="email"
                   id="email"
                   aria-describedby="emailHelp"
                   placeholder="Enter email"
                   value={this.state.email}
                   onChange={this.onInputChange}
                 />
-                <span className="icon is-small is-left">
-                  <i className="fas fa-envelope"></i>
-                </span>
               </p>
             </div>
             <div className="field">
               <p className="control">
-                <a href="/forgotpassword">Forgot password?</a>
+                <input
+                  type="password"
+                  className="input"
+                  id="newpassword"
+                  placeholder="New password"
+                  value={this.state.newpassword}
+                  onChange={this.onInputChange}
+                />
               </p>
             </div>
             <div className="field">
@@ -97,4 +119,4 @@ class ForgotPassword extends Component {
   }
 }
 
-export default ForgotPassword;
+export default ForgotPasswordVerification;

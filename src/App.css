@@ -1,7 +1,6 @@
 .tab-list {  border-bottom: 1px solid #ccc;
   padding-left: 0;
 }
-
 .tab-list-item {
   display: inline-block;
   list-style: none;
@@ -47,4 +46,21 @@ td:nth-child(even) {
 .Top {
   margin-right: 5px;
   margin-left: 5px;
+}
+
+.nav-design {
+  overflow: hidden;
+  background-color: #333;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  font-size: 16px;
+  background-color: #187561;
+}
+
+body {
+  margin-top: 63px;
+  position: relative;
 }
