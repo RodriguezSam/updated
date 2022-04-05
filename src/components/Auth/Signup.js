@@ -73,9 +73,8 @@ class Signup extends Component {
   render() {
     return (
       <section className="register-design">
-        <div className="" />
           <div className="signupSection">
-            <h1>Register</h1>
+            <h1>Signup Here</h1>
             <FormErrors formerrors={this.state.errors} />
 
             <form onSubmit={this.handleSubmit}>
@@ -133,12 +132,12 @@ class Signup extends Component {
                 </div>
                 <div className="field">
                   <p className="control">
-                    <a href="/forgotpassword">Forgot password?</a>
+                    <a href="/forgotpasswordform">Forgot password?</a>
                   </p>
                 </div>
                 <div className="field">
                   <p className="control">
-                    <button className="button is-success">
+                    <button className="button is-success formFieldButton">
                       Sign Up
                     </button>
                   </p>

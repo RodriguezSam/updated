@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import FormErrors from "../FormErrors";
 import Validate from "../Utility/FormValidation";
-import { Navigate } from 'react-router-dom';
 import { Auth } from 'aws-amplify';
 
 class ForgotPassword extends Component {
@@ -37,7 +36,7 @@ class ForgotPassword extends Component {
     // AWS Cognito integration here
     try {
       await Auth.forgotPassword(this.state.email);
-      <Navigate to='/forgotpasswordverification' />;
+      this.props.nextStep();
     }catch(error) {
       console.log(error);
     }
@@ -50,20 +49,22 @@ class ForgotPassword extends Component {
     document.getElementById(event.target.id).classList.remove("is-danger");
   }
 
+
   render() {
     return (
-      <section className="section auth">
-        <div className="container">
+      <section className="section">
+        <div className='gradientForm'>
+        <div className="container forgotpwCard">
           <h1>Forgot your password?</h1>
           <p>
             Please enter the email address associated with your account and we'll
-            email you a password reset link.
+            email you a password reset code.
           </p>
           <FormErrors formerrors={this.state.errors} />
 
           <form onSubmit={this.forgotPasswordHandler}>
             <div className="field">
-              <p className="control has-icons-left has-icons-right">
+              <p className="control">
                 <input
                   type="email"
                   className="input"
@@ -73,24 +74,17 @@ class ForgotPassword extends Component {
                   value={this.state.email}
                   onChange={this.onInputChange}
                 />
-                <span className="icon is-small is-left">
-                  <i className="fas fa-envelope"></i>
-                </span>
-              </p>
-            </div>
-            <div className="field">
-              <p className="control">
-                <a href="/forgotpassword">Forgot password?</a>
               </p>
             </div>
             <div className="field">
               <p className="control">
                 <button className="button is-success">
-                  Submit
+                  Next
                 </button>
               </p>
             </div>
           </form>
+        </div>
         </div>
       </section>
     );

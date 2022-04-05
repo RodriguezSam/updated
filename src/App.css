@@ -50,17 +50,17 @@ td:nth-child(even) {
 
 .nav-design {
   overflow: hidden;
-  background-color: #333;
+  background-color: rgb(37, 35, 35);
   position: fixed;
   top: 0;
   width: 100%;
   padding-top: 7px;
   padding-bottom: 7px;
   font-size: 16px;
-  background-color: #187561;
+  z-index: 1;
 }
 
-body {
-  margin-top: 63px;
+body{
+  margin-top: 60px;
   position: relative;
 }

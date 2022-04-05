@@ -43,7 +43,6 @@ class Login extends Component {
       console.log(user);
       this.props.auth.setAuthStatus(true);
       this.props.auth.setUser(user);
-      //<Navigate to="/home" state={{ isAuthenticated: true }} />;
     }catch(error) {
       let err = null;
       !error.message ? err = { "message": error } : err = error;
@@ -97,7 +96,7 @@ class Login extends Component {
               </p>
             </div>
               <p className="control formField">
-                <Link className='formFieldLink' to="/forgotpassword">Forgot password?</Link>
+                <Link className='formFieldLink' to="/forgotpasswordform">Forgot password?</Link>
               </p>
             <div className="field">
               <p className="control">

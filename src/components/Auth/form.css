@@ -1,5 +1,5 @@
 .design {
-  height: 89.5vh;
+  height: 100vh;
   display: flex;
   color: white;
 }
@@ -27,7 +27,7 @@
 }
 
 .formFieldInput {
-  width: 70%;
+  width: 60%;
   background-color: #565a59;
   border: none;
   color: white;
@@ -67,10 +67,13 @@
 }
 
 .register-design {
-  height: 89.5vh;
+  display: flex;
+  color: white;
+  height: 100vh;
   background-image: url(/src/components/Auth/registerBack.jpg);
   opacity: 0.9;
   background-size: cover;
+  text-align: center;
 }
 
 .signupSection {
@@ -88,3 +91,22 @@
   box-shadow: 3px 10px 20px 5px rgba(0, 0, 0, .5);
 }
 
+.forgotpwCard {
+  width: 70%;
+  padding: 30px 40px;
+  margin-top: 80px;
+  margin-bottom: 60px;
+  border: none !important;
+  box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.2);
+  position: fixed;
+  left: 15%;
+}
+
+.gradientForm {
+  display: flex;
+  color: white;
+  height: 100vh;
+  background-image: url(/src/components/Auth/passwordBack.jpg);
+  background-size: cover;
+  text-align: center;
+}

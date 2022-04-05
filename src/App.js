@@ -11,6 +11,7 @@ import Login from "./components/Auth/Login";
 import Signup from "./components/Auth/Signup";
 import Welcome from "./components/Auth/Welcome";
 import ForgotPassword from "./components/Auth/ForgotPassword";
+import ForgotPasswordForm from "./components/Auth/ForgotPasswordForm";
 import ForgotPasswordVerification from "./components/Utility/ForgotPasswordVerification";
 import { Auth } from 'aws-amplify';
 
@@ -60,6 +61,7 @@ class App extends Component {
           <div>
             <Navbar auth={authProps} />
             <Routes>
+              <Route path="/" element={<Home auth={authProps} />} />
               <Route path="/home" element={<Home auth={authProps} />} />
               <Route path="/dashboard" element={<Dashboard auth={authProps} />} />
               <Route path="/email" element={<Email auth={authProps} />} />
@@ -67,7 +69,7 @@ class App extends Component {
               <Route path="/login" element={<Login auth={authProps} />} />
               <Route path="/signup" element={<Signup auth={authProps} />} />
               <Route path="/welcome" element={<Welcome auth={authProps} />} />
-              <Route path="/forgotpassword" element={<ForgotPassword auth={authProps} />} />
+              <Route path="/forgotpasswordform" element={<ForgotPasswordForm auth={authProps} />} />
               <Route path="/forgotpasswordverification" element={<ForgotPasswordVerification auth={authProps} />} />
             </Routes>
           </div>
