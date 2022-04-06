@@ -6,7 +6,8 @@
 
 .appAside {
   width: 50%;
-  background-image: url(/src/components/Auth/mountain.jpg);
+  height: 100%;
+  background-image: url(/src/components/Auth/track_1.jpg);
 }
 
 .appForm {
@@ -87,6 +88,7 @@
   width: 800px;
   height: 450px;
   text-align: center;
+  border-radius: 20px;
   color: white;
   box-shadow: 3px 10px 20px 5px rgba(0, 0, 0, .5);
 }
@@ -100,13 +102,29 @@
   box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.2);
   position: fixed;
   left: 15%;
+  color: rgb(245, 248, 250);
+  background: rgb(99, 53, 53);
+  opacity: 0.9;
+  border-radius: 20px;
 }
 
-.gradientForm {
+.forgotpwBack {
   display: flex;
   color: white;
   height: 100vh;
   background-image: url(/src/components/Auth/passwordBack.jpg);
   background-size: cover;
   text-align: center;
+}
+.nextButton {
+  background-color: #121414;
+  color: white;
+  border: none;
+  width: 20%;
+  outline: none;
+  border-radius: 20px;
+  padding: 8px;
+  font-size: 16px;
+  font-weight: 400;
+  opacity: 1;
 }

@@ -53,7 +53,7 @@ class ForgotPassword extends Component {
   render() {
     return (
       <section className="section">
-        <div className='gradientForm'>
+        <div className='forgotpwBack'>
         <div className="container forgotpwCard">
           <h1>Forgot your password?</h1>
           <p>
@@ -78,7 +78,7 @@ class ForgotPassword extends Component {
             </div>
             <div className="field">
               <p className="control">
-                <button className="button is-success">
+                <button className="button is-success nextButton">
                   Next
                 </button>
               </p>
