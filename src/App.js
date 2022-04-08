@@ -61,7 +61,7 @@ class App extends Component {
           <div>
             <Navbar auth={authProps} />
             <Routes>
-              <Route path="/" element={<Home auth={authProps} />} />
+              <Route path="/" element={<Login auth={authProps} />} />
               <Route path="/home" element={<Home auth={authProps} />} />
               <Route path="/dashboard" element={<Dashboard auth={authProps} />} />
               <Route path="/email" element={<Email auth={authProps} />} />

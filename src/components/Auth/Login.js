@@ -70,7 +70,7 @@ class Login extends Component {
          <h1>Welcome back!</h1>
          <FormErrors formerrors={this.state.errors} />
           <form onSubmit={this.handleSubmit}>
-            <div className="field">
+            <div className="field ">
               <p className="control">
                 <input 
                   className="input formFieldInput" 
@@ -97,6 +97,9 @@ class Login extends Component {
             </div>
               <p className="control formField">
                 <Link className='formFieldLink' to="/forgotpasswordform">Forgot password?</Link>
+              </p>
+              <p className="control formField">
+                Don't have an account yet? <Link className='formFieldLink' to="/forgotpasswordform">Signup Here</Link>
               </p>
             <div className="field">
               <p className="control">

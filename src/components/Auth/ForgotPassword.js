@@ -52,9 +52,9 @@ class ForgotPassword extends Component {
 
   render() {
     return (
-      <section className="section">
+      <section className="">
         <div className='forgotpwBack'>
-        <div className="container forgotpwCard">
+        <div className="forgotpwCard">
           <h1>Forgot your password?</h1>
           <p>
             Please enter the email address associated with your account and we'll
@@ -67,7 +67,7 @@ class ForgotPassword extends Component {
               <p className="control">
                 <input
                   type="email"
-                  className="input"
+                  className="input forgotInput"
                   id="email"
                   aria-describedby="emailHelp"
                   placeholder="Enter email"
