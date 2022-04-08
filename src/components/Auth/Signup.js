@@ -83,11 +83,11 @@ class Signup extends Component {
                 <div className="field">
                   <p className="control">
                     <input 
-                      className="input" 
+                      className="input signupInput" 
                       type="text"
                       id="username"
                       aria-describedby="userNameHelp"
-                      placeholder="Enter username"
+                      placeholder="Enter email"
                       value={this.state.username}
                       onChange={this.onInputChange}
                     />
@@ -96,11 +96,11 @@ class Signup extends Component {
                 <div className="field">
                   <p className="control">
                     <input 
-                      className="input" 
+                      className="input signupInput" 
                       type="email"
                       id="email"
                       aria-describedby="emailHelp"
-                      placeholder="Enter email"
+                      placeholder="Confirm email"
                       value={this.state.email}
                       onChange={this.onInputChange}
                     />
@@ -109,7 +109,7 @@ class Signup extends Component {
                 <div className="field">
                   <p className="control">
                     <input 
-                      className="input" 
+                      className="input signupInput" 
                       type="password"
                       id="password"
                       placeholder="Password"
@@ -121,7 +121,7 @@ class Signup extends Component {
                 <div className="field">
                   <p className="control">
                     <input 
-                      className="input" 
+                      className="input signupInput" 
                       type="password"
                       id="confirmpassword"
                       placeholder="Confirm password"

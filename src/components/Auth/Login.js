@@ -99,7 +99,7 @@ class Login extends Component {
                 <Link className='formFieldLink' to="/forgotpasswordform">Forgot password?</Link>
               </p>
               <p className="control formField">
-                Don't have an account yet? <Link className='formFieldLink' to="/forgotpasswordform">Signup Here</Link>
+                Don't have an account yet? <Link className='formFieldLink' to="/signup">Signup Here</Link>
               </p>
             <div className="field">
               <p className="control">
