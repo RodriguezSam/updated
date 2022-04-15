@@ -80,7 +80,7 @@ const Email = () => {
   }, [status]);
 
   return (
-    <div>
+    <div className="dashboard-design">
       <div class="right">
         <a href="https://account.d5mz5bs8uvjp6.amplifyapp.com/">
         <img class="account" src="https://nyrevconnect.com/wp-content/uploads/2017/06/Placeholder_staff_photo-e1505825573317.png" width="50" height="50" alt="person icon"  ></img>
@@ -94,7 +94,7 @@ const Email = () => {
         <div label="Send Workout">
           <table>
            <thead>
-            <tr>
+            <tr className="email-table">
               <th>Send an exercise template for the week or build a custom one</th>
             </tr>
            </thead>
@@ -143,7 +143,7 @@ const Email = () => {
          <table>
           <thead>
            <tr>
-            <th>Send a welcome message to a new athlete or staff member:</th>
+            <th className="email-table">Send a welcome message to a new athlete or staff member:</th>
            </tr>
           </thead>
           <tbody>

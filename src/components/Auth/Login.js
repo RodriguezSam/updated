@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import FormErrors from "../FormErrors";
 import Validate from "../Utility/FormValidation";
 import { Auth } from "aws-amplify";
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import "./form.css"
 
 
@@ -27,7 +27,7 @@ class Login extends Component {
 
   handleSubmit = async event => {
     event.preventDefault();
-
+  
     // Form validation
     this.clearErrorState();
     const error = Validate(event, this.state);
@@ -43,6 +43,7 @@ class Login extends Component {
       console.log(user);
       this.props.auth.setAuthStatus(true);
       this.props.auth.setUser(user);
+      <Navigate replace to="/home" />
     }catch(error) {
       let err = null;
       !error.message ? err = { "message": error } : err = error;

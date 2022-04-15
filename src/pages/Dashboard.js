@@ -96,19 +96,18 @@ function Dashboard() {
     }
   
   return (
-    <div>
+    <div className="dashboard-design">
       <div class="right">
         <a href="https://account.d5mz5bs8uvjp6.amplifyapp.com/">
         <img class="account" src="https://nyrevconnect.com/wp-content/uploads/2017/06/Placeholder_staff_photo-e1505825573317.png" width="50" height="50" alt="person icon"  ></img>
         </a>
       </div>
-          <h5 class="right">Username</h5>
+        <h5 class="right">Username</h5>
+          <div class="Top">
+            <h1>Team Agone</h1>
+            <button class="right"> Save Changes </button>
+          </div>
            <div class="Top">
-             <h1>Team Agone</h1>
-             <button class="right"> Save Changes </button>
-           </div>
-           <div class="Top">
-           </div>
              <Tabs>
                <div label="USERS">
                <DragDropContext onDragEnd={handleDragEnd1}>
@@ -409,10 +408,9 @@ function Dashboard() {
                 </DragDropContext>
                </div>
              </Tabs>
+            </div>
       </div>
-      
     );
-  
   }
 
 export default Dashboard;

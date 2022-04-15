@@ -70,7 +70,7 @@ class ForgotPassword extends Component {
                   className="input forgotInput"
                   id="email"
                   aria-describedby="emailHelp"
-                  placeholder="Enter email"
+                  placeholder="Enter your email"
                   value={this.state.email}
                   onChange={this.onInputChange}
                 />

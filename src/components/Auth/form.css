@@ -69,7 +69,6 @@
 
 .register-design {
   display: flex;
-  color: white;
   height: 100vh;
   background-image: url(/src/components/Auth/registerBack.jpg);
   opacity: 0.9;

@@ -42,7 +42,7 @@ class ForgotPasswordVerification extends Component {
         this.state.verificationcode,
         this.state.newpassword
       );
-      this.props.history.push("/changepasswordconfirmation");
+      this.props.nextStep();
     }catch(error) {
       console.log(error);
     }
@@ -57,9 +57,10 @@ class ForgotPasswordVerification extends Component {
 
   render() {
     return (
-      <section className="section auth">
-        <div className="container">
-          <h1>Set new password</h1>
+      <section className="">
+        <div className="forgotpwBack" >
+        <div className="forgotpwCard">
+          <h1>Set your new password</h1>
           <p>
             Please enter the verification code sent to your email address below,
             your email address and a new password.
@@ -71,7 +72,7 @@ class ForgotPasswordVerification extends Component {
               <p className="control">
                 <input
                   type="text"
-                  className="input"
+                  className="input forgotInput"
                   id="verificationcode"
                   aria-describedby="verificationCodeHelp"
                   placeholder="Enter verification code"
@@ -81,44 +82,51 @@ class ForgotPasswordVerification extends Component {
               </p>
             </div>
             <div className="field">
-              <p className="control has-icons-left">
+              <p className="control">
                 <input 
-                  className="input" 
+                  className="input forgotInput" 
                   type="email"
                   id="email"
                   aria-describedby="emailHelp"
-                  placeholder="Enter email"
+                  placeholder="Enter your email"
                   value={this.state.email}
                   onChange={this.onInputChange}
                 />
-                <span className="icon is-small is-left">
-                  <i className="fas fa-envelope"></i>
-                </span>
               </p>
             </div>
             <div className="field">
-              <p className="control has-icons-left">
+              <p className="control">
                 <input
                   type="password"
-                  className="input"
+                  className="input forgotInput"
                   id="newpassword"
                   placeholder="New password"
                   value={this.state.newpassword}
                   onChange={this.onInputChange}
                 />
-                <span className="icon is-small is-left">
-                  <i className="fas fa-lock"></i>
-                </span>
               </p>
+            <div className="field">
+                <p className="control">
+                  <input 
+                    className="input forgotInput" 
+                    type="password"
+                    id="confirmpassword"
+                    placeholder="Confirm password"
+                    value={this.state.confirmpassword}
+                    onChange={this.onInputChange}
+                  />
+                </p>
+              </div>
             </div>
             <div className="field">
               <p className="control">
-                <button className="button is-success">
+                <button className="button is-success nextButton">
                   Submit
                 </button>
               </p>
             </div>
           </form>
+        </div>
         </div>
       </section>
     );

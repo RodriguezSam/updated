@@ -1,5 +1,5 @@
-import React, { Component, Fragment } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { Auth } from 'aws-amplify';
 import "../App.css";
 
@@ -28,7 +28,7 @@ export default class Navbar extends Component {
             </li>
               {this.props.auth.isAuthenticated && this.props.auth.user && (
                 <li className='nav nav-item'>
-                  <Link to="#">Hello {this.props.auth.user.username}</Link>
+                  <Link to="#">Hello{this.props.auth.user.email}</Link>
                 </li>
                 )}
               {!this.props.auth.isAuthenticated && (
