@@ -41,22 +41,20 @@ const Email = () => {
   }
 
   const [form2, setform2Input] = useState({
-    name: '', 
-    sender_email: '',
+    recipient_name: '', 
     recipient_email: '',
+    message: ''
   });
 
   const handleForm2 = (e) => {
     e.preventDefault();
-    emailjs.send('service_xug82mn', 'template_ybqig6r', form1, 'c4nT4o57gCX4dBxpv')
+    emailjs.send('service_xug82mn', 'template_s8fyxal', form2, 'c4nT4o57gCX4dBxpv')
     .then(response => {
           console.log('Email successfully sent!', response);
           setform2Input({
-            workout: '',
-            name: '', 
-            sender_email: '',
+            recipient_name: '',
             recipient_email: '',
-            exercise_details: ''
+            message: ''
           });
           setStatus('SUCCESS');
         }, error => {
@@ -150,20 +148,21 @@ const Email = () => {
            <td>
             <tr>
             <Container>
+             {status && renderAlert()}
               <Form>
                  <Form.Group controlId="form.Name">
                      <Form.Label>Name</Form.Label>
-                     <Form.Control type="text" required placeholder="Enter name" name="sender_name" />
+                     <Form.Control onChange={handleChange2} value={form2.recipient_name} type="text" required placeholder="Enter name" name="recipient_name" />
                  </Form.Group>
                  <Form.Group controlId="form.Email">
                      <Form.Label>Email address</Form.Label>
-                     <Form.Control type="email" required placeholder="name@example.com" name="sender_email" />
+                     <Form.Control onChange={handleChange2} value={form2.recipient_email} type="email" required placeholder="name@example.com" name="recipient_email" />
                  </Form.Group>
                  <Form.Group controlId="form.Textarea">
                      <Form.Label>Comment</Form.Label>
-                     <Form.Control name="comment" as="textarea" rows={3} />
+                     <Form.Control onChange={handleChange2}  value={form2.message} name="message" as="textarea" rows={3} />
                  </Form.Group>
-                 <Button variant="primary" type="submit">
+                 <Button onClick={handleForm2} variant="primary" type="submit">
                     Send Email  
                   </Button>
                </Form>
