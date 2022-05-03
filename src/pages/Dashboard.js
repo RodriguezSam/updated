@@ -173,8 +173,6 @@ function Dashboard() {
                    <tr>
                     <th></th>
                      <th>ID</th>
-                     <th>First Name</th>
-                     <th>Last Name</th>
                      <th>utc_start_time</th>
                      <th>local_start_time</th>
                      <th>start_latitude</th>
@@ -296,8 +294,6 @@ function Dashboard() {
                              <tr {...provider.draggableProps} ref={provider.innerRef}>
                                <td {...provider.dragHandleProps}>~</td>
                                <td>{dataobject.id}</td>
-                               <td>{dataobject.first_name}</td>
-                               <td>{dataobject.last_name}</td>
                                <td>{dataobject.utc_start_time}</td>
                                <td>{dataobject.local_start_time}</td>
                                <td>{dataobject.start_latitude}</td>
