@@ -173,6 +173,8 @@ function Dashboard() {
                    <tr>
                     <th></th>
                      <th>ID</th>
+                     <th>First Name</th>
+                     <th>Last Name</th>
                      <th>utc_start_time</th>
                      <th>local_start_time</th>
                      <th>start_latitude</th>
