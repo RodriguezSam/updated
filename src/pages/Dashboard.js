@@ -294,6 +294,8 @@ function Dashboard() {
                              <tr {...provider.draggableProps} ref={provider.innerRef}>
                                <td {...provider.dragHandleProps}>~</td>
                                <td>{dataobject.id}</td>
+                               <td>{dataobject.first_name}</td>
+                               <td>{dataobject.last_name}</td>
                                <td>{dataobject.utc_start_time}</td>
                                <td>{dataobject.local_start_time}</td>
                                <td>{dataobject.start_latitude}</td>
