@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 
 import { StreamChat } from 'stream-chat'
 import{
-  Chat, 
+  Chat,
   Channel,
-  ChannelHeader, 
+  ChannelHeader,
   ChannelList,
   LoadingIndicator,
   MessageInput,
@@ -15,11 +15,11 @@ import{
 
 import 'stream-chat-react/dist/css/index.css'
 
-const apiKey = 'h2k698p4kj4w'
+const apiKey = '9xrg7mfxu3ek'
 
 const user = {
   id: 'rylee',
-  name: 'Jonathan White Velasco',
+  name: 'Rylee Mitchell',
 }
 
 const filters = {type: 'messaging', members: { $in: [user.id] }}
@@ -34,8 +34,8 @@ export default function App() {
 
       await chatClient.connectUser(user, chatClient.devToken(user.id))
 
-      const channel = chatClient.channel('messaging', 'rylee-chat', {
-        name: 'Rylee Mitchell',
+      const channel = chatClient.channel('messaging', 'sam-chat', {
+        name: 'Samantha Rodriguez',
         members: [user.id]
       })
 
@@ -53,7 +53,7 @@ export default function App() {
 
   return(
     <Chat client={client} theme="messaging light">
-      <ChannelList 
+      <ChannelList
         filters={filters}
         sort={sort}/>
       <Channel >

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ForgotPassword from "./ForgotPassword";
-import VerificationCode from "../Utility/ForgotPasswordVerification";
+import VerificationCode from "../utility/ForgotPasswordVerification";
 import Confirmation from "./ChangePasswordConfirmation";
 
 class ForgotPasswordForm extends Component {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import FormErrors from "../FormErrors";
-import Validate from "../Utility/FormValidation";
+import Validate from "../utility/FormValidation";
 import { Auth } from "aws-amplify";
 import { Link, Navigate } from 'react-router-dom';
 import "./form.css"

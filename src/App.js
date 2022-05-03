@@ -12,7 +12,7 @@ import Signup from "./components/Auth/Signup";
 import Welcome from "./components/Auth/Welcome";
 import ForgotPassword from "./components/Auth/ForgotPassword";
 import ForgotPasswordForm from "./components/Auth/ForgotPasswordForm";
-import ForgotPasswordVerification from "./components/Utility/ForgotPasswordVerification";
+import ForgotPasswordVerification from "./components/utility/ForgotPasswordVerification";
 import { Auth } from 'aws-amplify';
 
 class App extends Component {
