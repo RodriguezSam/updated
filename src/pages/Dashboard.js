@@ -172,6 +172,7 @@ function Dashboard() {
                   <thead>
                    <tr>
                     <th></th>
+                     <th>ID</th>
                      <th>Email</th>
                      <th>First Name</th>
                      <th>Last Name</th>
@@ -295,6 +296,7 @@ function Dashboard() {
                            {(provider) => (
                              <tr {...provider.draggableProps} ref={provider.innerRef}>
                                <td {...provider.dragHandleProps}>~</td>
+                               <td>{dataobject.id}</td>
                                <td>adam.nash@pwrlab.com</td>
                                <td>Adam</td>
                                <td>Nash</td>
